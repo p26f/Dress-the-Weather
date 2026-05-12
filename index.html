@@ -2,784 +2,1262 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Dress the Weather</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#f5e6e0" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Dress the Weather" />
 <meta name="mobile-web-app-capable" content="yes" />
-<meta name="theme-color" content="#f5e6e0" />
 
-<!-- Inline SVG icon as favicon and Apple touch icon -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%23f5e6e0'/%3E%3Cellipse cx='256' cy='230' rx='105' ry='28' fill='%23e8c9be'/%3E%3Cpath d='M151 230 Q130 280 128 370 Q128 395 150 395 L362 395 Q384 395 384 370 Q382 280 361 230 Z' fill='%23c9907e'/%3E%3Cpath d='M151 230 Q130 280 128 370 Q128 395 150 395 L362 395 Q384 395 384 370 Q382 280 361 230 Z' fill='%23b06b57' opacity='0.35'/%3E%3Cellipse cx='256' cy='230' rx='105' ry='28' fill='%23e8c9be'/%3E%3Cpath d='M256 118 Q296 118 320 140 Q340 158 340 185 Q340 210 320 222 Q300 234 256 236 Q212 234 192 222 Q172 210 172 185 Q172 158 192 140 Q216 118 256 118 Z' fill='%23faf6f2'/%3E%3Ccircle cx='256' cy='178' r='28' fill='%23e8c9be'/%3E%3Ccircle cx='256' cy='178' r='18' fill='%23c9907e'/%3E%3Cpath d='M232 230 Q256 245 280 230 L290 280 Q256 295 222 280 Z' fill='%23faf6f2' opacity='0.5'/%3E%3Ccircle cx='340' cy='140' r='38' fill='%23f5e6e0'/%3E%3Ccircle cx='340' cy='132' r='14' fill='%23f5c842' opacity='0.9'/%3E%3Cpath d='M340 100 L340 88 M300 132 L288 132 M380 132 L392 132 M340 172 L340 184 M313 105 L305 97 M367 105 L375 97 M313 159 L305 167 M367 159 L375 167' stroke='%23f5c842' stroke-width='7' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E" />
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%23f5e6e0'/%3E%3Cellipse cx='256' cy='230' rx='105' ry='28' fill='%23e8c9be'/%3E%3Cpath d='M151 230 Q130 280 128 370 Q128 395 150 395 L362 395 Q384 395 384 370 Q382 280 361 230 Z' fill='%23c9907e'/%3E%3Cpath d='M151 230 Q130 280 128 370 Q128 395 150 395 L362 395 Q384 395 384 370 Q382 280 361 230 Z' fill='%23b06b57' opacity='0.35'/%3E%3Cellipse cx='256' cy='230' rx='105' ry='28' fill='%23e8c9be'/%3E%3Cpath d='M256 118 Q296 118 320 140 Q340 158 340 185 Q340 210 320 222 Q300 234 256 236 Q212 234 192 222 Q172 210 172 185 Q172 158 192 140 Q216 118 256 118 Z' fill='%23faf6f2'/%3E%3Ccircle cx='256' cy='178' r='28' fill='%23e8c9be'/%3E%3Ccircle cx='256' cy='178' r='18' fill='%23c9907e'/%3E%3Cpath d='M232 230 Q256 245 280 230 L290 280 Q256 295 222 280 Z' fill='%23faf6f2' opacity='0.5'/%3E%3Ccircle cx='340' cy='140' r='38' fill='%23f5e6e0'/%3E%3Ccircle cx='340' cy='132' r='14' fill='%23f5c842' opacity='0.9'/%3E%3Cpath d='M340 100 L340 88 M300 132 L288 132 M380 132 L392 132 M340 172 L340 184 M313 105 L305 97 M367 105 L375 97 M313 159 L305 167 M367 159 L375 167' stroke='%23f5c842' stroke-width='7' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E" />
+<!-- Icon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='115' fill='%23f5e6e0'/%3E%3Cpath d='M151 230 Q130 280 128 370 Q128 395 150 395 L362 395 Q384 395 384 370 Q382 280 361 230 Z' fill='%23c9907e'/%3E%3Cellipse cx='256' cy='230' rx='105' ry='28' fill='%23e8c9be'/%3E%3Cpath d='M256 118 Q296 118 320 140 Q340 158 340 185 Q340 210 320 222 Q300 234 256 236 Q212 234 192 222 Q172 210 172 185 Q172 158 192 140 Q216 118 256 118 Z' fill='%23faf6f2'/%3E%3Ccircle cx='256' cy='178' r='28' fill='%23e8c9be'/%3E%3Ccircle cx='256' cy='178' r='18' fill='%23c9907e'/%3E%3Ccircle cx='340' cy='140' r='38' fill='%23f5e6e0'/%3E%3Ccircle cx='340' cy='132' r='14' fill='%23f5c842' opacity='0.9'/%3E%3Cpath d='M340 100 L340 88 M300 132 L288 132 M380 132 L392 132 M340 172 L340 184 M313 105 L305 97 M367 105 L375 97' stroke='%23f5c842' stroke-width='7' stroke-linecap='round' opacity='0.75'/%3E%3C/svg%3E" />
+<link rel="apple-touch-icon" href="icon-512.svg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --blush: #f5e6e0;
-    --blush-mid: #e8c9be;
-    --blush-deep: #c9907e;
-    --clay: #b06b57;
-    --cream: #faf6f2;
-    --sand: #ede5dc;
-    --warm-white: #fdfaf7;
-    --text-dark: #2e1f1a;
-    --text-mid: #7a5248;
-    --text-light: #b08880;
-    --sage: #8fa68e;
-    --sage-light: #d8e4d6;
-    --stone: #c4b8b0;
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'DM Sans', system-ui, sans-serif;
-  }
+:root {
+  --blush: #f5e6e0;
+  --blush-mid: #e8c9be;
+  --blush-deep: #c9907e;
+  --clay: #b06b57;
+  --clay-dark: #9e5c49;
+  --cream: #faf6f2;
+  --sand: #ede5dc;
+  --warm-white: #fdfaf7;
+  --text-dark: #2e1f1a;
+  --text-mid: #7a5248;
+  --text-light: #b08880;
+  --sage: #8fa68e;
+  --sage-light: #d8e4d6;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+}
 
-  body {
-    font-family: var(--font-sans);
-    background: var(--cream);
-    color: var(--text-dark);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
-  .grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 180px;
-  }
+/* HEADER */
+.app-header {
+  padding: 2.5rem 1.5rem 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.logo {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--text-dark);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.logo span { color: var(--clay); font-style: italic; }
+.tagline {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
 
-  header {
-    padding: 2.5rem 2rem 1.5rem;
-    max-width: 780px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
+/* CONTROLS PANEL */
+.panel {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1.5rem 1rem;
+}
 
-  .logo {
-    font-family: var(--font-serif);
-    font-size: 2.6rem;
-    font-weight: 300;
-    color: var(--text-dark);
-    letter-spacing: 0.02em;
-    line-height: 1;
-  }
+/* ZIP ROW */
+.zip-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.zip-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1.5px solid var(--blush-mid);
+  border-radius: 50px;
+  padding: 0.5rem 1rem 0.5rem 1.2rem;
+  flex: 1;
+  transition: border-color 0.2s;
+}
+.zip-field:focus-within { border-color: var(--clay); }
+.zip-label-text {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  white-space: nowrap;
+  font-weight: 500;
+}
+.zip-input {
+  border: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  background: transparent;
+  width: 85px;
+}
+.zip-input::placeholder { color: #d4c4be; }
 
-  .logo span {
-    color: var(--clay);
-    font-style: italic;
-  }
+.home-btn {
+  background: var(--blush);
+  border: 1.5px solid var(--blush-mid);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 0.78rem;
+  color: var(--clay);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.home-btn:hover { background: var(--blush-mid); }
+.home-btn.no-home { opacity: 0.45; cursor: default; }
 
-  .tagline {
-    font-size: 0.78rem;
-    color: var(--text-light);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 400;
-    margin-top: 0.35rem;
-  }
+.set-home-btn {
+  background: none;
+  border: none;
+  font-size: 0.72rem;
+  color: var(--text-light);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.15s;
+}
+.set-home-btn:hover { color: var(--clay); }
 
-  .controls {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 0 2rem 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-  }
+.go-btn {
+  background: var(--clay);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.55rem 1.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+.go-btn:hover { background: var(--clay-dark); }
+.go-btn:active { transform: scale(0.97); }
 
-  .zip-group {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: white;
-    border: 1.5px solid var(--blush-mid);
-    border-radius: 50px;
-    padding: 0.45rem 1rem 0.45rem 1.2rem;
-    flex: 1;
-    min-width: 200px;
-    max-width: 280px;
-    transition: border-color 0.2s;
-  }
+/* TOGGLE ROWS */
+.toggle-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.toggle-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  font-weight: 500;
+  margin-right: 0.25rem;
+  white-space: nowrap;
+}
+.toggle-chip {
+  background: white;
+  border: 1.5px solid var(--blush-mid);
+  border-radius: 50px;
+  padding: 0.38rem 0.9rem;
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.toggle-chip:hover { border-color: var(--blush-deep); color: var(--clay); }
+.toggle-chip.active {
+  background: var(--clay);
+  border-color: var(--clay);
+  color: white;
+}
+.gender-chip { font-size: 1.1rem; padding: 0.3rem 0.75rem; }
 
-  .zip-group:focus-within {
-    border-color: var(--clay);
-  }
+/* DATE STRIP */
+.date-strip {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1.5rem 1rem;
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.date-strip::-webkit-scrollbar { display: none; }
+.date-chip {
+  flex-shrink: 0;
+  background: white;
+  border: 1.5px solid var(--blush-mid);
+  border-radius: 50px;
+  padding: 0.38rem 0.85rem;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--text-mid);
+  transition: all 0.15s;
+  text-align: center;
+  line-height: 1.4;
+}
+.date-chip .chip-day { font-weight: 500; display: block; }
+.date-chip .chip-date { color: var(--text-light); font-size: 0.68rem; display: block; }
+.date-chip:hover { border-color: var(--blush-deep); color: var(--clay); }
+.date-chip.active { background: var(--clay); border-color: var(--clay); color: white; }
+.date-chip.active .chip-date { color: rgba(255,255,255,0.7); }
 
-  .zip-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    white-space: nowrap;
-    font-weight: 500;
-  }
+.divider {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blush-mid), transparent);
+}
 
-  .zip-input {
-    border: none;
-    outline: none;
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: var(--text-dark);
-    background: transparent;
-    width: 90px;
-    font-weight: 400;
-  }
+/* CARD */
+.card-area {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
 
-  .zip-input::placeholder { color: var(--stone); }
+.outfit-card {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid var(--blush-mid);
+  overflow: hidden;
+  display: none;
+  animation: fadeUp 0.35s ease forwards;
+}
+.outfit-card.visible { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .lookup-btn {
-    background: var(--clay);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 0.55rem 1.4rem;
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: background 0.2s, transform 0.1s;
-    white-space: nowrap;
-  }
+/* CARD TOP */
+.card-top {
+  background: var(--blush);
+  padding: 1.6rem 1.5rem 1.3rem;
+  position: relative;
+  overflow: hidden;
+}
+.card-top::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: var(--blush-mid);
+  opacity: 0.3;
+}
+.weather-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+.temp-block {}
+.temp-main {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--text-dark);
+  line-height: 1;
+}
+.temp-unit { font-size: 1.4rem; color: var(--text-mid); vertical-align: super; }
+.temp-feels {
+  font-size: 0.75rem;
+  color: var(--text-mid);
+  margin-top: 0.15rem;
+}
+.temp-range {
+  font-size: 0.75rem;
+  color: var(--text-mid);
+}
+.weather-details { flex: 1; padding-top: 0.3rem; }
+.weather-condition {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--text-dark);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.weather-meta {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.meta-pill {
+  font-size: 0.7rem;
+  color: var(--text-mid);
+  background: rgba(255,255,255,0.65);
+  border-radius: 20px;
+  padding: 0.22rem 0.65rem;
+}
+.uv-pill {
+  font-size: 0.7rem;
+  border-radius: 20px;
+  padding: 0.22rem 0.65rem;
+  font-weight: 500;
+}
+.uv-low { background: rgba(255,255,255,0.65); color: var(--text-mid); }
+.uv-moderate { background: #fff3cd; color: #856404; }
+.uv-high { background: #ffe0d0; color: #9c3a00; }
+.uv-very-high { background: #ffd0d0; color: #8b0000; }
+.weather-emoji {
+  font-size: 2.6rem;
+  position: relative;
+  z-index: 1;
+  margin-top: 0.2rem;
+}
 
-  .lookup-btn:hover { background: #9e5c49; }
-  .lookup-btn:active { transform: scale(0.97); }
+/* CARD BODY */
+.card-body { padding: 1.5rem; }
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  font-weight: 500;
+  margin-bottom: 0.85rem;
+}
 
-  .date-strip {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 0 2rem 1.5rem;
-    display: flex;
-    gap: 0.4rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
+.vibe-strip {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+.vibe-tag {
+  font-size: 0.72rem;
+  background: var(--blush);
+  color: var(--clay);
+  border-radius: 20px;
+  padding: 0.28rem 0.8rem;
+  border: 1px solid var(--blush-mid);
+}
 
-  .date-strip::-webkit-scrollbar { display: none; }
+.outfit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 1.4rem;
+}
+.outfit-item {
+  background: var(--cream);
+  border: 1px solid var(--sand);
+  border-radius: 14px;
+  padding: 0.9rem 0.85rem;
+}
+.item-category {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 0.3rem;
+}
+.item-name {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+.item-detail {
+  font-size: 0.7rem;
+  color: var(--text-mid);
+  margin-top: 0.22rem;
+  line-height: 1.4;
+}
+.item-icon { font-size: 1.2rem; margin-bottom: 0.35rem; display: block; }
 
-  .date-chip {
-    flex-shrink: 0;
-    background: white;
-    border: 1.5px solid var(--blush-mid);
-    border-radius: 50px;
-    padding: 0.4rem 0.9rem;
-    cursor: pointer;
-    font-family: var(--font-sans);
-    font-size: 0.78rem;
-    color: var(--text-mid);
-    transition: all 0.18s;
-    text-align: center;
-    line-height: 1.4;
-  }
+.avoid-box {
+  background: #fff5f2;
+  border: 1px solid #f0c4b8;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+.avoid-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blush-deep);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.avoid-text {
+  font-size: 0.83rem;
+  color: var(--clay);
+  line-height: 1.5;
+}
 
-  .date-chip .chip-day { font-weight: 500; display: block; }
-  .date-chip .chip-date { color: var(--text-light); font-size: 0.7rem; display: block; }
+.tip-box {
+  background: var(--sage-light);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  border: 1px solid #c2d4c0;
+}
+.tip-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.tip-text {
+  font-size: 0.85rem;
+  color: #4a6349;
+  line-height: 1.55;
+  font-style: italic;
+  font-family: var(--font-serif);
+}
 
-  .date-chip:hover { border-color: var(--blush-deep); color: var(--clay); }
+/* STATES */
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.loading-state p, .empty-state p {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+.spinner {
+  width: 28px; height: 28px;
+  border: 2px solid var(--blush-mid);
+  border-top-color: var(--clay);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-  .date-chip.active {
-    background: var(--clay);
-    border-color: var(--clay);
-    color: white;
-  }
+.error-msg {
+  background: #fdf0ed;
+  border: 1px solid #f0c4b8;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-size: 0.83rem;
+  color: var(--clay);
+  margin: 0 1.5rem 1rem;
+  max-width: 655px;
+  margin-left: auto;
+  margin-right: auto;
+  display: none;
+}
+.error-msg.visible { display: block; }
 
-  .date-chip.active .chip-date { color: rgba(255,255,255,0.7); }
+.location-display {
+  max-width: 700px;
+  margin: 0 auto 0.4rem;
+  padding: 0 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
 
-  .divider {
-    max-width: 780px;
-    margin: 0 auto 1.5rem;
-    padding: 0 2rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--blush-mid), transparent);
-  }
+/* OFFLINE BANNER */
+.offline-banner {
+  background: #fff3cd;
+  color: #856404;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.78rem;
+  display: none;
+}
+.offline-banner.visible { display: block; }
 
-  .card-area {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 0 2rem 3rem;
-  }
-
-  .outfit-card {
-    background: white;
-    border-radius: 24px;
-    border: 1px solid var(--blush-mid);
-    overflow: hidden;
-    display: none;
-  }
-
-  .outfit-card.visible { display: block; }
-
-  .card-top {
-    background: var(--blush);
-    padding: 1.8rem 2rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card-top::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    border-radius: 50%;
-    background: var(--blush-mid);
-    opacity: 0.4;
-  }
-
-  .card-top::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: 60px;
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    background: var(--blush-deep);
-    opacity: 0.08;
-  }
-
-  .weather-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .temp-block {}
-
-  .temp-main {
-    font-family: var(--font-serif);
-    font-size: 4rem;
-    font-weight: 300;
-    color: var(--text-dark);
-    line-height: 1;
-  }
-
-  .temp-unit {
-    font-size: 1.6rem;
-    color: var(--text-mid);
-    vertical-align: super;
-  }
-
-  .temp-range {
-    font-size: 0.8rem;
-    color: var(--text-mid);
-    margin-top: 0.2rem;
-    letter-spacing: 0.04em;
-  }
-
-  .weather-details {
-    flex: 1;
-    padding-top: 0.4rem;
-  }
-
-  .weather-condition {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    font-style: italic;
-    color: var(--text-dark);
-    font-weight: 400;
-    line-height: 1.2;
-  }
-
-  .weather-meta {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.6rem;
-    flex-wrap: wrap;
-  }
-
-  .meta-pill {
-    font-size: 0.72rem;
-    color: var(--text-mid);
-    background: rgba(255,255,255,0.6);
-    border-radius: 20px;
-    padding: 0.25rem 0.7rem;
-    letter-spacing: 0.04em;
-  }
-
-  .weather-emoji {
-    font-size: 3rem;
-    position: relative;
-    z-index: 1;
-    margin-top: 0.2rem;
-    filter: none;
-  }
-
-  .card-body {
-    padding: 1.8rem 2rem;
-  }
-
-  .section-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    font-weight: 500;
-    margin-bottom: 1rem;
-  }
-
-  .outfit-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 1.8rem;
-  }
-
-  .outfit-item {
-    background: var(--cream);
-    border: 1px solid var(--sand);
-    border-radius: 16px;
-    padding: 1rem 0.9rem;
-    position: relative;
-  }
-
-  .item-category {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-light);
-    margin-bottom: 0.35rem;
-  }
-
-  .item-name {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: var(--text-dark);
-    line-height: 1.3;
-  }
-
-  .item-detail {
-    font-size: 0.73rem;
-    color: var(--text-mid);
-    margin-top: 0.25rem;
-    line-height: 1.4;
-  }
-
-  .item-icon {
-    font-size: 1.3rem;
-    margin-bottom: 0.4rem;
-    display: block;
-  }
-
-  .tip-box {
-    background: var(--sage-light);
-    border-radius: 14px;
-    padding: 1rem 1.2rem;
-    border: 1px solid #c2d4c0;
-  }
-
-  .tip-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--sage);
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-  }
-
-  .tip-text {
-    font-size: 0.88rem;
-    color: #4a6349;
-    line-height: 1.55;
-    font-style: italic;
-    font-family: var(--font-serif);
-  }
-
-  .vibe-strip {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-
-  .vibe-tag {
-    font-size: 0.75rem;
-    background: var(--blush);
-    color: var(--clay);
-    border-radius: 20px;
-    padding: 0.3rem 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0.03em;
-    border: 1px solid var(--blush-mid);
-  }
-
-  .loading-state, .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-  }
-
-  .loading-state p, .empty-state p {
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    font-style: italic;
-    color: var(--text-light);
-    margin-top: 0.5rem;
-  }
-
-  .loading-state .spinner {
-    width: 32px;
-    height: 32px;
-    border: 2px solid var(--blush-mid);
-    border-top-color: var(--clay);
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-    margin: 0 auto;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .error-msg {
-    background: #fdf0ed;
-    border: 1px solid #f0c4b8;
-    border-radius: 12px;
-    padding: 1rem 1.2rem;
-    font-size: 0.85rem;
-    color: var(--clay);
-    margin: 0 2rem 1.5rem;
-    max-width: 740px;
-    margin-left: auto;
-    margin-right: auto;
-    display: none;
-  }
-
-  .error-msg.visible { display: block; }
-
-  .location-display {
-    max-width: 780px;
-    margin: 0 auto 0.5rem;
-    padding: 0 2rem;
-    font-size: 0.8rem;
-    color: var(--text-light);
-    letter-spacing: 0.05em;
-  }
-
-  @media (max-width: 600px) {
-    .logo { font-size: 2rem; }
-    .temp-main { font-size: 3rem; }
-    header, .controls, .date-strip, .card-area { padding-left: 1rem; padding-right: 1rem; }
-    .card-body { padding: 1.2rem; }
-    .card-top { padding: 1.2rem; }
-  }
+@media (max-width: 480px) {
+  .logo { font-size: 1.9rem; }
+  .temp-main { font-size: 2.8rem; }
+  .card-body { padding: 1.1rem; }
+  .card-top { padding: 1.1rem; }
+  .outfit-grid { grid-template-columns: repeat(2, 1fr); }
+}
 </style>
 </head>
 <body>
-<div class="grain" aria-hidden="true"></div>
 
-<header>
+<div id="offlineBanner" class="offline-banner">You are offline. Showing cached data if available.</div>
+
+<header class="app-header">
   <div class="logo">dress the <span>weather</span></div>
   <div class="tagline">your daily outfit, curated by the sky</div>
 </header>
 
-<div class="controls">
-  <div class="zip-group">
-    <span class="zip-label">Zip</span>
-    <input class="zip-input" id="zipInput" type="text" maxlength="5" placeholder="10001" inputmode="numeric" />
+<div class="panel">
+  <!-- ZIP ROW -->
+  <div class="zip-row">
+    <div class="zip-field">
+      <span class="zip-label-text">Zip</span>
+      <input class="zip-input" id="zipInput" type="text" maxlength="5" placeholder="10001" inputmode="numeric" />
+    </div>
+    <button class="home-btn no-home" id="homeBtn" title="Load home ZIP">🏠 Home</button>
+    <button class="go-btn" id="goBtn">Get forecast</button>
   </div>
-  <button class="lookup-btn" id="lookupBtn">Get forecast</button>
+
+  <div style="margin-bottom:0.75rem; display:flex; align-items:center; gap:0.75rem;">
+    <button class="set-home-btn" id="setHomeBtn">Set current ZIP as home</button>
+    <span id="homeLabel" style="font-size:0.72rem; color:var(--text-light);"></span>
+  </div>
+
+  <!-- GENDER TOGGLE -->
+  <div class="toggle-row">
+    <span class="toggle-label">Style for</span>
+    <button class="toggle-chip gender-chip active" data-gender="female" id="genderFemale">💃</button>
+    <button class="toggle-chip gender-chip" data-gender="male" id="genderMale">🕺</button>
+  </div>
+
+  <!-- STYLE TOGGLE -->
+  <div class="toggle-row">
+    <span class="toggle-label">Occasion</span>
+    <button class="toggle-chip active" data-style="casual">Casual</button>
+    <button class="toggle-chip" data-style="professional">Professional</button>
+    <button class="toggle-chip" data-style="date-night">Date Night</button>
+    <button class="toggle-chip" data-style="vacation">Vacation</button>
+    <button class="toggle-chip" data-style="athletic">Athletic</button>
+  </div>
 </div>
 
-<div id="errorMsg" class="error-msg"></div>
-
-<div id="locationDisplay" class="location-display"></div>
-
+<!-- DATE STRIP -->
 <div class="date-strip" id="dateStrip"></div>
 <div class="divider"></div>
+
+<div id="errorMsg" class="error-msg"></div>
+<div id="locationDisplay" class="location-display"></div>
 
 <div class="card-area">
   <div id="loadingState" class="loading-state" style="display:none">
     <div class="spinner"></div>
-    <p>reading the skies for you...</p>
+    <p>reading the skies...</p>
   </div>
-
   <div id="emptyState" class="empty-state">
     <p>enter a zip code to see what to wear</p>
   </div>
-
   <div id="outfitCard" class="outfit-card"></div>
 </div>
 
 <script>
-const OUTFITS = {
-  frigid: {
-    range: [-Infinity, 20],
-    vibes: ['cozy layered', 'cold weather chic', 'bundled up'],
-    items: [
-      { icon: '🧥', cat: 'Outer layer', name: 'Heavy puffer or wool coat', detail: 'Floor-length or cropped, belted over everything' },
-      { icon: '👚', cat: 'Top', name: 'Fitted turtleneck or thermal base layer', detail: 'Merino wool is warmest and least bulky' },
-      { icon: '👖', cat: 'Bottoms', name: 'Fleece-lined leggings or thick straight-leg jeans', detail: 'Tuck into boots for extra warmth' },
-      { icon: '👢', cat: 'Shoes', name: 'Insulated knee-high boots', detail: 'Adds warmth and looks intentional' },
-      { icon: '🧣', cat: 'Accessories', name: 'Chunky scarf, beanie, and gloves', detail: 'All three are non-negotiable today' }
-    ],
-    tip: 'Tuck a fitted turtleneck into fleece-lined leggings and pull tall boots over them — warm, streamlined, and put-together. A midi skirt over thick tights is a great dress alternative.'
-  },
-  cold: {
-    range: [21, 40],
-    vibes: ['effortless layers', 'soft textures', 'winter classic'],
-    items: [
-      { icon: '🧥', cat: 'Outer layer', name: 'Wool or teddy coat', detail: 'Longline keeps legs warmer' },
-      { icon: '👚', cat: 'Top', name: 'Ribbed turtleneck or chunky knit sweater', detail: 'Merino wool or cashmere blend if you have it' },
-      { icon: '👖', cat: 'Bottoms', name: 'High-waisted trousers or straight-leg jeans', detail: 'Tuck your top in for a clean silhouette' },
-      { icon: '👢', cat: 'Shoes', name: 'Chelsea or lug-sole boots', detail: 'Ankle or knee, both work' },
-      { icon: '🧣', cat: 'Accessories', name: 'Soft scarf or beret', detail: 'A small finishing touch that matters' }
-    ],
-    tip: 'Tuck a ribbed turtleneck into high-waisted trousers and throw a longline coat over it — minimal effort, very put-together. A midi skirt with opaque tights works well as a dress alternative.'
-  },
-  chilly: {
-    range: [41, 55],
-    vibes: ['transitional dressing', 'relaxed layers', 'casual cool'],
-    items: [
-      { icon: '🧥', cat: 'Outer layer', name: 'Trench coat or denim jacket', detail: 'Trench for polish, denim for ease' },
-      { icon: '👚', cat: 'Top', name: 'Lightweight sweater or relaxed long sleeve', detail: 'Slightly oversized reads effortless' },
-      { icon: '👖', cat: 'Bottoms', name: 'Wide-leg or straight jeans, or tailored trousers', detail: 'This temperature is perfect for any pant silhouette' },
-      { icon: '👟', cat: 'Shoes', name: 'Loafers, ankle boots, or clean sneakers', detail: 'All three are right for this weather' },
-      { icon: '👗', cat: 'Dress alternative', name: 'Midi skirt + tucked knit', detail: 'Just as easy, slightly more put-together' }
-    ],
-    tip: 'A relaxed knit tucked into wide-leg jeans with loafers is the effortless formula for this temperature. A midi skirt with a fitted sweater is an equally easy alternative.'
-  },
-  mild: {
-    range: [56, 68],
-    vibes: ['light & breezy', 'spring-ready', 'easy femininity'],
-    items: [
-      { icon: '👚', cat: 'Top', name: 'Fitted tee, linen blouse, or lightweight knit', detail: 'Tuck it in for a cleaner look' },
-      { icon: '👖', cat: 'Bottoms', name: 'Linen trousers, straight jeans, or a midi skirt', detail: 'Light fabrics feel best at this temp' },
-      { icon: '🧥', cat: 'Light layer', name: 'Cardigan, blazer, or light jacket', detail: 'Tie it around your waist once it warms up' },
-      { icon: '👡', cat: 'Shoes', name: 'Ballet flats, mules, or low block heels', detail: 'Keep it effortless' },
-      { icon: '👗', cat: 'Dress alternative', name: 'Linen shirt dress or floral midi', detail: 'With a cardigan for the cooler parts of the day' }
-    ],
-    tip: 'A tucked linen blouse with wide-leg trousers and mules is a go-to for this temperature. If you want a dress, a midi with a light cardigan knotted at the waist is just as easy.'
-  },
-  warm: {
-    range: [69, 80],
-    vibes: ['warm & relaxed', 'fresh summer ease', 'minimal layers'],
-    items: [
-      { icon: '👚', cat: 'Top', name: 'Cropped tee, tank, or breezy blouse', detail: 'Breathable cotton or linen fabrics' },
-      { icon: '👖', cat: 'Bottoms', name: 'Linen trousers, denim shorts, or a flowy skirt', detail: 'Any silhouette works at this temperature' },
-      { icon: '🩴', cat: 'Shoes', name: 'Strappy sandals, espadrilles, or sneakers', detail: 'Bare legs or not, both are great' },
-      { icon: '👜', cat: 'Bag', name: 'Raffia tote or simple bucket bag', detail: 'Seasonal and practical' },
-      { icon: '👗', cat: 'Dress alternative', name: 'Sundress or slip dress', detail: 'A single breathable piece for an easy day' }
-    ],
-    tip: 'A cropped top with wide-leg linen pants and sandals is the formula here. If you want something even easier, a simple sundress does the same job.'
-  },
-  hot: {
-    range: [81, 95],
-    vibes: ['light & airy', 'summer ease', 'breathable basics'],
-    items: [
-      { icon: '👚', cat: 'Top', name: 'Loose tank, linen crop top, or breezy blouse', detail: 'Natural fabrics only — no synthetics' },
-      { icon: '👖', cat: 'Bottoms', name: 'Wide-leg linen pants, cotton shorts, or a flowy midi skirt', detail: 'Loose silhouettes keep you coolest' },
-      { icon: '🩴', cat: 'Shoes', name: 'Flat sandals or slides', detail: 'Let your feet breathe today' },
-      { icon: '🧴', cat: 'Essential', name: 'SPF + wide-brim hat', detail: 'A straw hat is practical and always chic' },
-      { icon: '👗', cat: 'Dress alternative', name: 'Flowy maxi or linen shirt dress', detail: 'One loose piece is sometimes cooler than separates' }
-    ],
-    tip: 'A loose linen top with wide-leg pants and flat sandals is the move. If you want a single piece, a flowy maxi in natural fabric is just as cool and even easier.'
-  },
-  scorching: {
-    range: [96, Infinity],
-    vibes: ['heat-survival chic', 'minimal & breathable', 'effortless cool'],
-    items: [
-      { icon: '👚', cat: 'Top', name: 'Sleeveless linen or cotton top', detail: 'As little fabric as reasonably possible' },
-      { icon: '👖', cat: 'Bottoms', name: 'Loose linen shorts or wide-leg cotton pants', detail: 'Avoid anything that clings or traps heat' },
-      { icon: '🩴', cat: 'Shoes', name: 'Flat strappy sandals', detail: 'Closed-toe will be uncomfortable today' },
-      { icon: '🎩', cat: 'Must-have', name: 'Wide-brim hat + sunglasses', detail: 'Function and fashion both covered' },
-      { icon: '👗', cat: 'Dress alternative', name: 'Loose gauze or linen maxi dress', detail: 'Maximum airflow in a single piece' }
-    ],
-    tip: 'A sleeveless linen top with loose shorts and sandals keeps you coolest. If you prefer a dress, loose gauze or linen in a maxi length actually moves more air than fitted separates.'
+// ─── STATE ───────────────────────────────────────────────
+let forecastData = null;
+let selectedDayIndex = 0;
+let currentGender = 'female';
+let currentStyle = 'casual';
+
+// ─── STORAGE ─────────────────────────────────────────────
+function saveHomeZip(zip) {
+  localStorage.setItem('homeZip', zip);
+  updateHomeBtn();
+}
+function getHomeZip() { return localStorage.getItem('homeZip') || ''; }
+function updateHomeBtn() {
+  const zip = getHomeZip();
+  const btn = document.getElementById('homeBtn');
+  const label = document.getElementById('homeLabel');
+  if (zip) {
+    btn.classList.remove('no-home');
+    btn.title = `Load ${zip}`;
+    label.textContent = `Home: ${zip}`;
+  } else {
+    btn.classList.add('no-home');
+    label.textContent = '';
   }
-};
-
-const RAIN_OVERRIDE = {
-  vibes: ['rain-ready', 'inclement chic', 'covered & cute'],
-  extra: { icon: '☂️', cat: 'Rain essential', name: 'Waterproof layers or a stylish rain jacket', detail: 'A trench doubles as a rain coat beautifully' },
-  footwear: { icon: '🥾', cat: 'Shoes swap', name: 'Waterproof ankle boots or cute rain boots', detail: 'Skip suede and canvas today' },
-  tip_suffix: ' Since rain is expected, prioritize a water-resistant outer layer and ankle boots over anything that will get ruined wet.'
-};
-
-const SNOW_OVERRIDE = {
-  vibes: ['snow day chic', 'winter wonderland', 'cozy & dry'],
-  extra: { icon: '🌨️', cat: 'Snow essential', name: 'Insulated waterproof boots', detail: 'Knee-high or ankle, keep feet dry' },
-  tip_suffix: ' Snow in the forecast means waterproofing matters — wear your most insulated, waterproof footwear and layer generously.'
-};
-
-const CONDITION_EMOJIS = {
-  sunny: '☀️', clear: '☀️', 'mostly clear': '🌤️', 'partly cloudy': '⛅',
-  'mostly cloudy': '🌥️', overcast: '☁️', fog: '🌫️', drizzle: '🌦️',
-  rain: '🌧️', 'heavy rain': '🌧️', snow: '❄️', sleet: '🌨️',
-  'thunder': '⛈️', default: '🌡️'
-};
-
-function getEmoji(condition) {
-  const c = (condition || '').toLowerCase();
-  for (const [k, v] of Object.entries(CONDITION_EMOJIS)) {
-    if (c.includes(k)) return v;
-  }
-  return CONDITION_EMOJIS.default;
 }
 
-function getTempCategory(tempF) {
-  for (const [key, data] of Object.entries(OUTFITS)) {
-    if (tempF >= data.range[0] && tempF <= data.range[1]) return key;
+// ─── OUTFIT DATA ──────────────────────────────────────────
+const OUTFITS = {
+  female: {
+    casual: {
+      frigid: {
+        vibes: ['cozy layered','cold weather chic','bundled up'],
+        items: [
+          { icon:'🧥', cat:'Outer layer', name:'Heavy puffer or wool coat', detail:'Belted or longline for warmth and shape' },
+          { icon:'👚', cat:'Top', name:'Fitted turtleneck or thermal knit', detail:'Merino wool is warmest without the bulk' },
+          { icon:'👖', cat:'Bottoms', name:'Fleece-lined leggings or thick straight-leg jeans', detail:'Tuck into tall boots' },
+          { icon:'👢', cat:'Shoes', name:'Insulated knee-high boots', detail:'Warmth and polish in one' },
+          { icon:'🧣', cat:'Accessories', name:'Chunky scarf, beanie, gloves', detail:'All three are non-negotiable today' }
+        ],
+        avoid:'Skip thin fabrics, open-toe shoes, and anything that gaps at the neck or wrists.',
+        tip:'Tuck a ribbed turtleneck into fleece-lined leggings, pull tall boots over, and layer a longline coat on top. Warm, streamlined, done.'
+      },
+      cold: {
+        vibes:['effortless layers','soft textures','winter classic'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Wool or teddy coat', detail:'Longline keeps legs warmer' },
+          { icon:'👚', cat:'Top', name:'Ribbed turtleneck or chunky knit sweater', detail:'Tuck into your bottoms for a clean line' },
+          { icon:'👖', cat:'Bottoms', name:'High-waisted trousers or straight-leg jeans', detail:'Both work equally well here' },
+          { icon:'👢', cat:'Shoes', name:'Chelsea or lug-sole boots', detail:'Ankle or knee, either is right' },
+          { icon:'🧣', cat:'Accessories', name:'Soft scarf or beret', detail:'Small touch that pulls it all together' }
+        ],
+        avoid:'Avoid canvas sneakers, bare ankles, and anything too lightweight on top.',
+        tip:'Tuck a ribbed knit into high-waisted trousers, add a longline coat and boots. A midi skirt with opaque tights is a great dress alternative.'
+      },
+      chilly: {
+        vibes:['transitional dressing','relaxed layers','casual cool'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Trench coat or denim jacket', detail:'Trench for polish, denim for ease' },
+          { icon:'👚', cat:'Top', name:'Lightweight sweater or relaxed long sleeve', detail:'Slightly oversized reads effortless' },
+          { icon:'👖', cat:'Bottoms', name:'Wide-leg jeans or tailored trousers', detail:'Any pant silhouette works at this temp' },
+          { icon:'👟', cat:'Shoes', name:'Loafers, ankle boots, or clean sneakers', detail:'All three are right' },
+          { icon:'👗', cat:'Dress alt', name:'Midi skirt + tucked knit', detail:'Just as easy, slightly more put-together' }
+        ],
+        avoid:'Skip suede if there is any chance of rain. Avoid shorts — it will feel colder than it looks.',
+        tip:'A relaxed knit tucked into wide-leg jeans with loafers is the effortless formula here.'
+      },
+      mild: {
+        vibes:['light and breezy','spring-ready','easy femininity'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Fitted tee, linen blouse, or lightweight knit', detail:'Tuck in for a cleaner look' },
+          { icon:'👖', cat:'Bottoms', name:'Linen trousers, straight jeans, or midi skirt', detail:'Light fabrics feel best' },
+          { icon:'🧥', cat:'Light layer', name:'Cardigan, blazer, or light jacket', detail:'Tie around your waist once it warms' },
+          { icon:'👡', cat:'Shoes', name:'Ballet flats, mules, or low block heels', detail:'Keep it effortless' },
+          { icon:'👗', cat:'Dress alt', name:'Linen shirt dress or floral midi', detail:'With a light cardigan for cooler moments' }
+        ],
+        avoid:'You may not need a heavy coat but bring a layer — mornings and evenings can surprise you.',
+        tip:'A linen blouse tucked into wide-leg trousers with mules is perfect for this temperature. Easy, feminine, no overthinking.'
+      },
+      warm: {
+        vibes:['warm and relaxed','fresh summer ease','minimal layers'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Cropped tee, tank, or breezy blouse', detail:'Breathable cotton or linen' },
+          { icon:'👖', cat:'Bottoms', name:'Linen trousers, denim shorts, or flowy skirt', detail:'Any silhouette works here' },
+          { icon:'🩴', cat:'Shoes', name:'Strappy sandals, espadrilles, or sneakers', detail:'Bare legs or not, both are great' },
+          { icon:'🕶️', cat:'Accessories', name:'Sunglasses and SPF', detail:'Non-negotiable today' },
+          { icon:'👗', cat:'Dress alt', name:'Sundress or slip dress', detail:'One breathable piece for an easy day' }
+        ],
+        avoid:'Skip anything synthetic that does not breathe. Avoid dark colors if you are spending time in the sun.',
+        tip:'A cropped linen top with wide-leg pants and sandals is the formula. A simple sundress works just as well if you want one piece.'
+      },
+      hot: {
+        vibes:['light and airy','summer ease','breathable basics'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Loose tank, linen crop, or breezy blouse', detail:'Natural fabrics only' },
+          { icon:'👖', cat:'Bottoms', name:'Wide-leg linen pants, cotton shorts, or flowy skirt', detail:'Loose silhouettes keep you coolest' },
+          { icon:'🩴', cat:'Shoes', name:'Flat sandals or slides', detail:'Let your feet breathe' },
+          { icon:'🎩', cat:'Must-have', name:'Wide-brim hat and sunglasses', detail:'Function and fashion covered' },
+          { icon:'👗', cat:'Dress alt', name:'Flowy maxi or linen shirt dress', detail:'Sometimes one loose piece is cooler than separates' }
+        ],
+        avoid:'No synthetics, no tight silhouettes, no closed-toe shoes if you can help it. Dark fabrics will absorb heat.',
+        tip:'A loose linen top with wide-leg pants and flat sandals is the move. A flowy maxi in natural fabric is just as cool and even easier.'
+      },
+      scorching: {
+        vibes:['heat-survival chic','minimal and breathable','effortless cool'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Sleeveless linen or cotton top', detail:'As little fabric as reasonably possible' },
+          { icon:'👖', cat:'Bottoms', name:'Loose linen shorts or wide-leg cotton pants', detail:'Avoid anything that clings' },
+          { icon:'🩴', cat:'Shoes', name:'Flat strappy sandals', detail:'Closed-toe will be very uncomfortable' },
+          { icon:'🎩', cat:'Must-have', name:'Wide-brim hat and sunglasses', detail:'Essential today, not optional' },
+          { icon:'👗', cat:'Dress alt', name:'Loose gauze or linen maxi dress', detail:'Maximum airflow in a single piece' }
+        ],
+        avoid:'No synthetic fabrics, no dark colors, no closed shoes, no tight waistbands. Everything should be as loose as possible.',
+        tip:'On a day this hot, fabric is everything. Linen, cotton, gauze only. A sleeveless top with loose shorts and sandals, or a gauze maxi — nothing else makes sense.'
+      }
+    },
+    professional: {
+      frigid: {
+        vibes:['polished and warm','office-ready layers','put-together'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Structured wool coat or belted wrap coat', detail:'Classic and professional over any work outfit' },
+          { icon:'👚', cat:'Top', name:'Fine-knit turtleneck or silk blouse under a blazer', detail:'Turtlenecks read polished in cold weather' },
+          { icon:'👖', cat:'Bottoms', name:'Tailored trousers or a pencil skirt with opaque tights', detail:'Both are office-appropriate' },
+          { icon:'👠', cat:'Shoes', name:'Heeled ankle boots or classic pumps', detail:'Pumps over thick tights works well in winter' },
+          { icon:'👜', cat:'Bag', name:'Structured tote or leather handbag', detail:'Big enough for your day, polished enough for the office' }
+        ],
+        avoid:'Avoid anything casual — no chunky knits, no sneakers, no overly bulky layers under a blazer.',
+        tip:'A fine-knit turtleneck under a blazer with tailored trousers and heeled ankle boots is the cleanest cold-weather work outfit there is.'
+      },
+      cold: {
+        vibes:['sleek and professional','smart layers','winter polish'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Wool or cashmere coat', detail:'A quality coat is the most visible piece — invest here' },
+          { icon:'👔', cat:'Top', name:'Silk blouse or fitted blazer over a knit', detail:'Blazer over a thin turtleneck is a reliable formula' },
+          { icon:'👖', cat:'Bottoms', name:'Tailored trousers or midi skirt with tights', detail:'Midi length with ankle boots looks very current' },
+          { icon:'👠', cat:'Shoes', name:'Heeled or flat ankle boots', detail:'Block heels are comfortable and professional' },
+          { icon:'👜', cat:'Bag', name:'Leather tote or structured shoulder bag', detail:'Keep it minimal and polished' }
+        ],
+        avoid:'Skip casual denim and chunky-soled shoes in a professional setting. Keep accessories streamlined.',
+        tip:'A blazer over a thin turtleneck with tailored trousers and ankle boots. Simple, complete, and exactly right for a cold professional day.'
+      },
+      chilly: {
+        vibes:['professional ease','polished transition','smart casual'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Tailored trench coat or structured blazer', detail:'Trench over everything is a classic for a reason' },
+          { icon:'👔', cat:'Top', name:'Silk blouse, fitted knit, or button-down', detail:'Tuck in for a cleaner silhouette' },
+          { icon:'👖', cat:'Bottoms', name:'Tailored trousers or a midi skirt', detail:'Either reads polished at this temperature' },
+          { icon:'👠', cat:'Shoes', name:'Loafers, block heels, or sleek ankle boots', detail:'All three are office-appropriate' },
+          { icon:'👜', cat:'Bag', name:'Structured tote or leather crossbody', detail:'Keep it clean and purposeful' }
+        ],
+        avoid:'Avoid overly casual tops or anything wrinkled. A trench coat elevates almost any work outfit — lean on it.',
+        tip:'A silk blouse tucked into tailored trousers, a structured trench, and loafers. Professional without effort.'
+      },
+      mild: {
+        vibes:['effortless polish','spring professional','clean and confident'],
+        items:[
+          { icon:'👔', cat:'Top', name:'Silk blouse or structured top', detail:'Tuck into your bottoms for a put-together look' },
+          { icon:'👖', cat:'Bottoms', name:'Tailored trousers or a midi pencil skirt', detail:'Linen trousers work beautifully at this temperature' },
+          { icon:'🧥', cat:'Layer', name:'Lightweight blazer or structured cardigan', detail:'Drape over shoulders for a relaxed professional look' },
+          { icon:'👠', cat:'Shoes', name:'Mules, block heels, or pointed-toe flats', detail:'All work for a professional mild-weather day' },
+          { icon:'👜', cat:'Bag', name:'Minimal leather tote or structured bag', detail:'Let the outfit do the talking' }
+        ],
+        avoid:'Avoid overly casual pieces even at mild temperatures — keep the fabric quality high and the silhouette clean.',
+        tip:'Linen trousers with a tucked silk blouse and a lightweight blazer draped over the shoulders. Perfect mild-weather professional dressing.'
+      },
+      warm: {
+        vibes:['warm weather polish','linen office','summer professional'],
+        items:[
+          { icon:'👔', cat:'Top', name:'Silk cami under a linen blazer, or a structured blouse', detail:'Keep it crisp even in the heat' },
+          { icon:'👖', cat:'Bottoms', name:'Tailored linen trousers or a midi skirt', detail:'Linen breathes and still reads professional' },
+          { icon:'👠', cat:'Shoes', name:'Pointed-toe mules, block-heel sandals, or loafers', detail:'Elegant open-toe is fine in warm professional settings' },
+          { icon:'🕶️', cat:'Accessories', name:'SPF and minimal jewelry', detail:'Keep accessories clean and intentional' },
+          { icon:'👜', cat:'Bag', name:'Structured leather or rattan tote', detail:'Rattan in a professional setting works beautifully in summer' }
+        ],
+        avoid:'Avoid anything sheer without a proper layer, overly casual sandals, or fabrics that wrinkle badly in heat (some linens). Opt for linen-blend.',
+        tip:'A linen blazer over a silk cami with tailored trousers and mules. Professional, summer-appropriate, and put-together without trying too hard.'
+      },
+      hot: {
+        vibes:['minimal and polished','cool professional','summer office'],
+        items:[
+          { icon:'👔', cat:'Top', name:'Sleeveless structured blouse or shell top', detail:'Clean silhouette without the heat of sleeves' },
+          { icon:'👖', cat:'Bottoms', name:'Wide-leg linen trousers or midi skirt', detail:'Loose and professional — the heat-appropriate power combo' },
+          { icon:'👠', cat:'Shoes', name:'Strappy block-heel sandals or pointed mules', detail:'Professional open-toe is completely appropriate in summer' },
+          { icon:'🕶️', cat:'Accessories', name:'SPF and simple gold jewelry', detail:'Minimal is always the right call in the heat' },
+          { icon:'👜', cat:'Bag', name:'Clean leather tote or structured clutch', detail:'Keep it streamlined' }
+        ],
+        avoid:'Avoid heavy fabrics, structured blazers you will overheat in, and closed-toe shoes if your office allows otherwise.',
+        tip:'A sleeveless structured blouse with wide-leg linen trousers and strappy sandals. Hot-weather professional dressing that still means business.'
+      },
+      scorching: {
+        vibes:['cool and composed','summer minimal','professional survival'],
+        items:[
+          { icon:'👔', cat:'Top', name:'Sleeveless silk or linen blouse', detail:'The least fabric while still being professional' },
+          { icon:'👖', cat:'Bottoms', name:'Wide-leg linen or cotton-blend trousers', detail:'Loose and airy reads polished in hot weather' },
+          { icon:'👠', cat:'Shoes', name:'Minimal strappy sandals or backless mules', detail:'Your feet need to breathe today' },
+          { icon:'🎩', cat:'Must-have', name:'Wide-brim hat for commuting, SPF always', detail:'You can always remove the hat at the office' },
+          { icon:'👜', cat:'Bag', name:'Minimal tote', detail:'Less to carry in extreme heat' }
+        ],
+        avoid:'Skip anything with full sleeves, synthetic fabrics, or heavy structure. Even professional dressing has exceptions in extreme heat.',
+        tip:'Scorching heat and professional dress code is a challenge. A sleeveless silk blouse with wide-leg linen trousers is the answer — cool, composed, appropriate.'
+      }
+    },
+    'date-night': {
+      frigid: {
+        vibes:['cozy glamour','winter date night','sleek and warm'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Faux fur stole or long velvet coat', detail:'Statement outerwear is the move in deep cold' },
+          { icon:'👗', cat:'Main outfit', name:'Fitted knit dress or satin slip with a chunky cardigan', detail:'Warmth and femininity at once' },
+          { icon:'👢', cat:'Shoes', name:'Heeled knee-high boots', detail:'Elegant and warm — perfect for a cold night out' },
+          { icon:'💎', cat:'Accessories', name:'Statement earrings or a delicate layered necklace', detail:'Let one piece do the talking' },
+          { icon:'👜', cat:'Bag', name:'Small velvet or beaded clutch', detail:'Evening-appropriate and fits just the essentials' }
+        ],
+        avoid:'Skip anything too casual. A cold night out is the perfect excuse for your most dramatic coat.',
+        tip:'A satin slip dress over a thin turtleneck with heeled knee-high boots and a faux fur stole. Cold-weather date night done properly.'
+      },
+      cold: {
+        vibes:['elevated evening','romantic layers','winter glam'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Wool wrap coat or classic trench', detail:'Something you would feel good arriving in' },
+          { icon:'👗', cat:'Main outfit', name:'Fitted midi skirt + silk blouse, or a wrap dress', detail:'Both are date-night appropriate and slightly elevated' },
+          { icon:'👠', cat:'Shoes', name:'Block heels or strappy heeled boots', detail:'Comfort for a full evening' },
+          { icon:'💎', cat:'Accessories', name:'Delicate gold jewelry', detail:'Simple and romantic' },
+          { icon:'👜', cat:'Bag', name:'Small leather or satin shoulder bag', detail:'Minimal — let the outfit be the focus' }
+        ],
+        avoid:'Avoid overly casual shoes or anything that reads too office-like. Elevate even slightly above your usual.',
+        tip:'A wrap dress with heeled boots and a beautiful coat is a reliable formula that always lands for a cold-weather date night.'
+      },
+      chilly: {
+        vibes:['relaxed romance','effortless date night','soft and elevated'],
+        items:[
+          { icon:'🧥', cat:'Layer', name:'Leather jacket or tailored blazer', detail:'Both add an evening edge to simpler outfits' },
+          { icon:'👗', cat:'Main outfit', name:'Midi skirt + fitted top, or a wrap dress', detail:'Elevated but not overdressed for a chilly evening' },
+          { icon:'👠', cat:'Shoes', name:'Ankle boots with a heel or elegant flats', detail:'Comfort through the evening without sacrificing style' },
+          { icon:'💎', cat:'Accessories', name:'Statement earrings or a delicate necklace', detail:'One focal piece keeps it intentional' },
+          { icon:'👜', cat:'Bag', name:'Small crossbody or clutch', detail:'Hands-free is always the right call for a date' }
+        ],
+        avoid:'A chilly evening does not mean under-dressing. Bring a real layer — a leather jacket or blazer, not just a cardigan.',
+        tip:'A midi skirt with a fitted top, leather jacket, ankle boots, and one statement earring. The most reliable date-night formula there is.'
+      },
+      mild: {
+        vibes:['spring romance','effortlessly feminine','soft evening'],
+        items:[
+          { icon:'👗', cat:'Main outfit', name:'Floral or satin midi dress', detail:'Mild evenings are made for this' },
+          { icon:'🧥', cat:'Layer', name:'Light cardigan or denim jacket to take on and off', detail:'You may not need it, but have it' },
+          { icon:'👠', cat:'Shoes', name:'Strappy heeled sandals or pointed-toe mules', detail:'The shoes make the outfit here' },
+          { icon:'💎', cat:'Accessories', name:'Delicate gold jewelry or a bold earring', detail:'Pick one and commit' },
+          { icon:'👜', cat:'Bag', name:'Small satin or leather clutch', detail:'Evening-appropriate and minimal' }
+        ],
+        avoid:'Mild evening temperatures are perfect — do not over-layer and hide what you are wearing. Trust the weather.',
+        tip:'A floral midi with strappy sandals and gold jewelry. Mild spring evenings are genuinely perfect for dressing up — take full advantage.'
+      },
+      warm: {
+        vibes:['warm evening elegance','summer date night','effortless glam'],
+        items:[
+          { icon:'👗', cat:'Main outfit', name:'Slip dress, wrap dress, or a linen co-ord set', detail:'Elegant without trying too hard' },
+          { icon:'👠', cat:'Shoes', name:'Heeled strappy sandals', detail:'The key piece for elevating a simple warm-weather outfit' },
+          { icon:'💎', cat:'Accessories', name:'Gold jewelry — hoop earrings or a layered necklace', detail:'Warm skin and gold is always the right combination' },
+          { icon:'🕶️', cat:'If evening', name:'A silk scarf or light wrap', detail:'For air-conditioned restaurants or a breeze' },
+          { icon:'👜', cat:'Bag', name:'Small leather or rattan clutch', detail:'Minimal and intentional' }
+        ],
+        avoid:'Avoid heavy fabrics or anything that will make you uncomfortable by the end of the night. Warm evenings reward light, elegant simplicity.',
+        tip:'A slip dress, strappy sandals, gold hoops. Warm evening date nights are the easiest to dress for — lean into minimal and let the simplicity be the point.'
+      },
+      hot: {
+        vibes:['summer glam','minimal elegance','heat-proof chic'],
+        items:[
+          { icon:'👗', cat:'Main outfit', name:'Slinky slip dress or a linen two-piece', detail:'Light fabric, elegant silhouette' },
+          { icon:'👠', cat:'Shoes', name:'Strappy flat or heeled sandals', detail:'Skip closed-toe entirely tonight' },
+          { icon:'💎', cat:'Accessories', name:'Statement earrings and a simple necklace', detail:'Jewelry does the heavy lifting when fabric is minimal' },
+          { icon:'🌸', cat:'Hair', name:'Up-do or pinned-back style', detail:'Off the neck in heat — always' },
+          { icon:'👜', cat:'Bag', name:'Tiny clutch or minimal shoulder bag', detail:'As little as possible' }
+        ],
+        avoid:'Avoid anything that clings unattractively when you sweat. Stick to fabrics that drape. Skip heels if you will be walking on hot pavement.',
+        tip:'A slinky slip, strappy sandals, hair up, gold earrings. Hot night out dressing is about restraint — the less you wear, the more intentional it looks.'
+      },
+      scorching: {
+        vibes:['minimal glam','resort evening','effortless heat'],
+        items:[
+          { icon:'👗', cat:'Main outfit', name:'Sheer or gauze midi dress, or a sleek two-piece', detail:'Maximum airflow, still evening-appropriate' },
+          { icon:'👠', cat:'Shoes', name:'Flat strappy sandals', detail:'Heels on a scorching night are a real commitment — flats are just as elegant' },
+          { icon:'💎', cat:'Accessories', name:'Bold earrings and nothing else', detail:'One strong piece is all you need' },
+          { icon:'🌸', cat:'Hair', name:'Up-do — bun, twist, or clip', detail:'Off the neck is non-negotiable in this heat' },
+          { icon:'👜', cat:'Bag', name:'Tiny clutch, nothing more', detail:'Minimize everything tonight' }
+        ],
+        avoid:'Skip everything that adds heat. The entire strategy is subtraction — less fabric, fewer layers, no unnecessary pieces.',
+        tip:'Scorching date night: a sheer or gauze dress, flat sandals, hair up, bold earrings. Done. Less is genuinely more when it is this hot.'
+      }
+    },
+    vacation: {
+      frigid: {
+        vibes:['cold-weather getaway','ski chic','resort cozy'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Ski jacket or puffer in a fun color', detail:'Vacation is the time to go bold with outerwear' },
+          { icon:'👚', cat:'Top', name:'Cozy fleece or fitted thermal base layer', detail:'Vacation layers can still be cute' },
+          { icon:'👖', cat:'Bottoms', name:'Ski pants, fleece-lined leggings, or insulated trousers', detail:'Depends on your activities' },
+          { icon:'👢', cat:'Shoes', name:'Snow boots or insulated waterproof boots', detail:'Function first in extreme cold' },
+          { icon:'🧣', cat:'Accessories', name:'Colorful beanie, scarf, and gloves set', detail:'Match them or mix them — vacation rules' }
+        ],
+        avoid:'Do not prioritize looking cute over staying warm. Frostbite does not care about your outfit. Layer properly.',
+        tip:'Cold-weather vacations call for functional pieces that still feel intentional. A colorful puffer or fun beanie goes a long way toward making practical feel festive.'
+      },
+      cold: {
+        vibes:['city winter getaway','stylish and warm','travel chic'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Classic wool coat or a bold colored puffer', detail:'Something that photographs well — you will be in pictures' },
+          { icon:'👚', cat:'Top', name:'Chunky knit or cozy turtleneck', detail:'Vacation comfort is allowed to be stylish' },
+          { icon:'👖', cat:'Bottoms', name:'Straight-leg jeans or tailored trousers', detail:'Versatile enough for sightseeing and dinner' },
+          { icon:'👢', cat:'Shoes', name:'Comfortable ankle or knee-high boots', detail:'You will be walking — comfort matters' },
+          { icon:'👜', cat:'Bag', name:'Crossbody bag or stylish backpack', detail:'Hands-free for exploring' }
+        ],
+        avoid:'Avoid uncomfortable shoes — cold city vacations involve a lot of walking. Style matters, but blisters ruin trips.',
+        tip:'A chunky knit, straight jeans, knee-high boots, and a great coat. Versatile enough for everything a cold-weather trip throws at you.'
+      },
+      chilly: {
+        vibes:['travel casual','explore ready','effortless tourist'],
+        items:[
+          { icon:'🧥', cat:'Layer', name:'Denim jacket or packable light jacket', detail:'Easy to tie around your waist when you warm up' },
+          { icon:'👚', cat:'Top', name:'Comfortable tee or lightweight knit', detail:'Something you can move and explore in' },
+          { icon:'👖', cat:'Bottoms', name:'Straight jeans or relaxed trousers', detail:'Comfortable for a full day out' },
+          { icon:'👟', cat:'Shoes', name:'Comfortable sneakers or walking shoes', detail:'On vacation, your feet come first' },
+          { icon:'👜', cat:'Bag', name:'Crossbody or small daypack', detail:'Secure and hands-free for sightseeing' }
+        ],
+        avoid:'Do not wear uncomfortable shoes on vacation for any reason. No one looks good limping.',
+        tip:'Comfortable jeans, a relaxed tee, a denim jacket, and sneakers. Vacation dressing is not the time to suffer for style.'
+      },
+      mild: {
+        vibes:['perfect travel weather','spring getaway','exploring in comfort'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Breezy blouse or relaxed linen top', detail:'Light and packable — vacation wardrobe essentials' },
+          { icon:'👖', cat:'Bottoms', name:'Linen trousers, relaxed jeans, or a midi skirt', detail:'Whatever photographs well and feels good' },
+          { icon:'🧥', cat:'Layer', name:'Light cardigan or blazer', detail:'For cooler evenings or air-conditioned museums' },
+          { icon:'👟', cat:'Shoes', name:'Comfortable walking shoes, sandals, or sneakers', detail:'Comfort first — always on vacation' },
+          { icon:'👜', cat:'Bag', name:'Crossbody or tote', detail:'Depends on your day — both work' }
+        ],
+        avoid:'Mild vacation weather is genuinely perfect. Do not overthink it. Pack pieces that mix and match and can go from day to evening.',
+        tip:'Mild weather on vacation is a gift. Linen trousers, a blouse, light cardigan, comfortable shoes. You can go anywhere in this.'
+      },
+      warm: {
+        vibes:['warm getaway','beach-adjacent','summer exploring'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Breezy tank or linen top', detail:'Something that photographs well and breathes' },
+          { icon:'👖', cat:'Bottoms', name:'Linen shorts, a flowy skirt, or easy trousers', detail:'Light fabrics for warm exploring' },
+          { icon:'🩴', cat:'Shoes', name:'Comfortable sandals or espadrilles', detail:'Both work for exploring and look vacation-appropriate' },
+          { icon:'🕶️', cat:'Must-have', name:'Sunglasses, hat, SPF', detail:'All three — every day' },
+          { icon:'👗', cat:'Dress option', name:'Sundress or linen shirt dress', detail:'One easy piece for a low-effort vacation day' }
+        ],
+        avoid:'Avoid over-packing for warm vacations. You need less than you think. Focus on breathable fabrics in neutral or coordinating colors.',
+        tip:'A linen top, easy shorts or a skirt, comfortable sandals, a hat, and good sunglasses. Warm vacation dressing is actually the simplest kind.'
+      },
+      hot: {
+        vibes:['resort mode','tropical ease','beach vacation'],
+        items:[
+          { icon:'🩱', cat:'Base', name:'Swimsuit or bikini as your starting point', detail:'You may go from beach to lunch to exploring in one outfit' },
+          { icon:'👗', cat:'Cover-up', name:'Sheer kaftan, linen shorts, or a wrap skirt', detail:'Easy to pull on over a swimsuit' },
+          { icon:'🩴', cat:'Shoes', name:'Flat sandals or flip flops', detail:'Vacation hot weather is flip-flop weather' },
+          { icon:'🎩', cat:'Must-have', name:'Wide-brim hat, sunglasses, SPF', detail:'Every single day without exception' },
+          { icon:'👜', cat:'Bag', name:'Straw or canvas beach tote', detail:'Holds everything and looks the part' }
+        ],
+        avoid:'On a hot vacation, trying too hard reads wrong. Embrace the ease. One good hat and a linen cover-up does more than a full outfit.',
+        tip:'Hot vacation dressing: swimsuit, linen cover-up, flat sandals, great hat, good bag. That is the whole formula.'
+      },
+      scorching: {
+        vibes:['extreme summer ease','desert or tropical','minimal resort'],
+        items:[
+          { icon:'👗', cat:'Main', name:'Loose gauze or linen dress, or swimsuit as base', detail:'The absolute minimum that still looks intentional' },
+          { icon:'🩴', cat:'Shoes', name:'Flat sandals only', detail:'No other footwear makes sense today' },
+          { icon:'🎩', cat:'Essential', name:'Wide-brim hat and SPF 50+', detail:'Sun protection is outfit number one today' },
+          { icon:'💧', cat:'Practical', name:'Water bottle always in hand', detail:'Hydration is part of the look today' },
+          { icon:'🕶️', cat:'Must-have', name:'Quality sunglasses', detail:'UV protection and the finishing touch' }
+        ],
+        avoid:'Everything is about not dying in the heat today. Skip anything that traps heat. Natural fabrics only. Stay in the shade.',
+        tip:'Scorching vacation day: a loose dress or swimsuit cover-up, flat sandals, hat, sunglasses, water. Nothing else is needed or wanted.'
+      }
+    },
+    athletic: {
+      frigid: {
+        vibes:['cold weather athlete','winter workout','layered and ready'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Insulated running jacket or wind-resistant shell', detail:'Essential for outdoor activity in extreme cold' },
+          { icon:'👚', cat:'Mid layer', name:'Thermal fleece or long-sleeve moisture-wicking top', detail:'Traps heat without bulk' },
+          { icon:'🩳', cat:'Base', name:'Thermal running tights or fleece-lined leggings', detail:'Full length — this is not shorts weather' },
+          { icon:'👟', cat:'Shoes', name:'Running shoes or trail shoes with grip', detail:'Cold surfaces can be slippery' },
+          { icon:'🧣', cat:'Accessories', name:'Running balaclava, ear warmer, and gloves', detail:'Protect your extremities — they will go numb fast' }
+        ],
+        avoid:'Never skip the ear and hand coverage in this cold. Exposed extremities become painful very quickly during outdoor exercise.',
+        tip:'Thermal base layer plus fleece mid plus wind-resistant shell. Three layers for outdoor athletic activity in extreme cold is the rule.'
+      },
+      cold: {
+        vibes:['cold run ready','outdoor athlete','winter active'],
+        items:[
+          { icon:'🧥', cat:'Outer layer', name:'Running jacket or athletic wind-breaker', detail:'Wind-resistant and moisture-wicking' },
+          { icon:'👚', cat:'Top', name:'Long-sleeve moisture-wicking base layer', detail:'Keeps you warm without overheating once you are moving' },
+          { icon:'🩳', cat:'Bottoms', name:'Thermal running tights or leggings', detail:'Full-length for this temperature' },
+          { icon:'👟', cat:'Shoes', name:'Running shoes appropriate to your surface', detail:'Road or trail depending on your route' },
+          { icon:'🧤', cat:'Accessories', name:'Light gloves and ear warmer', detail:'You may want to remove gloves once warm — keep them accessible' }
+        ],
+        avoid:'You will heat up once moving, so avoid overdressing. One fewer layer than you think you need is usually right for a run in this temperature.',
+        tip:'The cold-weather athletic rule: you should feel slightly underdressed when you start. You will warm up within five minutes of moving.'
+      },
+      chilly: {
+        vibes:['crisp morning run','active and fresh','athletic ease'],
+        items:[
+          { icon:'👚', cat:'Top', name:'Long-sleeve athletic top or light running jacket', detail:'A single long-sleeve is often enough at this temp once moving' },
+          { icon:'🩳', cat:'Bottoms', name:'Running tights or athletic leggings', detail:'Full length or 7/8 — both work' },
+          { icon:'👟', cat:'Shoes', name:'Running shoes or cross-trainers', detail:'Whatever matches your activity' },
+          { icon:'🧤', cat:'Optional', name:'Light gloves for the first few minutes', detail:'You may pull them off once warmed up' },
+          { icon:'🎽', cat:'Alternative', name:'A light hoodie over a tee', detail:'If running is not on the agenda, this is the casual athletic look' }
+        ],
+        avoid:'Avoid cotton base layers — they hold moisture and will make you cold once you stop moving. Stick to synthetic or merino.',
+        tip:'A breathable long-sleeve and leggings is the ideal chilly athletic outfit. You will be perfectly comfortable once you are moving.'
+      },
+      mild: {
+        vibes:['perfect workout weather','active spring','easy athletic'],
+        items:[
+          { icon:'🎽', cat:'Top', name:'Athletic tee or fitted tank', detail:'This temperature is perfect for lighter athletic tops' },
+          { icon:'🩳', cat:'Bottoms', name:'Running shorts, biker shorts, or athletic leggings', detail:'All three are appropriate at this temperature' },
+          { icon:'👟', cat:'Shoes', name:'Running shoes or cross-trainers', detail:'Match to your activity' },
+          { icon:'🧴', cat:'Extras', name:'SPF if you are outside', detail:'Mild does not mean no UV' },
+          { icon:'💧', cat:'Hydration', name:'Water bottle', detail:'Always, but especially outdoors' }
+        ],
+        avoid:'Mild is the sweet spot for athletic wear. No need to overthink layers. A tee and shorts or tights is exactly right.',
+        tip:'Mild weather is the best athletic weather. A fitted tank, your preferred bottom, good shoes. Perfect conditions — enjoy it.'
+      },
+      warm: {
+        vibes:['warm run','summer athletic','light and moving'],
+        items:[
+          { icon:'🎽', cat:'Top', name:'Moisture-wicking tank or sports bra with shorts', detail:'Minimize fabric in warm active conditions' },
+          { icon:'🩳', cat:'Bottoms', name:'Running shorts or lightweight biker shorts', detail:'Avoid full-length tights if you can — too warm' },
+          { icon:'👟', cat:'Shoes', name:'Breathable running shoes', detail:'Ventilated uppers are worth it in the heat' },
+          { icon:'🧴', cat:'Must-have', name:'SPF 30+ and a hat or visor', detail:'Sun protection during warm outdoor exercise is essential' },
+          { icon:'💧', cat:'Essential', name:'Hydration plan', detail:'Water bottle or belt — bring more than you think you need' }
+        ],
+        avoid:'Avoid cotton athletic wear — it gets heavy and stays wet. Avoid dark colors that absorb heat. Plan your route around shade.',
+        tip:'Warm athletic dressing is about moisture management. Light, breathable, moisture-wicking fabrics. The fewer layers the better.'
+      },
+      hot: {
+        vibes:['heat athlete','summer intensity','minimal active'],
+        items:[
+          { icon:'🎽', cat:'Top', name:'Sports bra or ultra-lightweight moisture-wicking tank', detail:'Minimum fabric that still feels appropriate' },
+          { icon:'🩳', cat:'Bottoms', name:'Short running shorts or compression shorts', detail:'Nothing long today' },
+          { icon:'👟', cat:'Shoes', name:'Breathable running shoes', detail:'Ventilated upper is a must in hot conditions' },
+          { icon:'🎩', cat:'Must-have', name:'Cap or visor and SPF 50', detail:'Serious sun protection for serious heat' },
+          { icon:'💧', cat:'Critical', name:'More water than you think you need', detail:'Heat + exercise = serious hydration requirement' }
+        ],
+        avoid:'Outdoor intense exercise in real heat is dangerous — consider adjusting the time of day or going indoors. Light, minimal clothing if you must go out.',
+        tip:'If exercising in significant heat, schedule it for early morning or after sunset. Minimum fabric, maximum SPF, serious hydration. Know when to stop.'
+      },
+      scorching: {
+        vibes:['heat management','indoor or very early','minimal athletic'],
+        items:[
+          { icon:'🎽', cat:'Top', name:'Sports bra or moisture-wicking crop only', detail:'The absolute minimum' },
+          { icon:'🩳', cat:'Bottoms', name:'Very short running shorts', detail:'Nothing restrictive or long' },
+          { icon:'👟', cat:'Shoes', name:'Your most breathable running shoe', detail:'Mesh uppers if you have them' },
+          { icon:'💧', cat:'Critical', name:'Electrolyte drink and water', detail:'Plain water alone is not enough in extreme heat exercise' },
+          { icon:'🌡️', cat:'Safety', name:'Consider moving indoors or to early morning', detail:'Scorching temperatures and exercise are a serious combination' }
+        ],
+        avoid:'Seriously consider whether outdoor exercise is the right call today. If you go out, keep it short, stay in the shade, and have a plan to cool down fast.',
+        tip:'Scorching temperatures make outdoor athletic activity genuinely risky. If you are going out: minimum clothing, electrolytes, early morning or after dark. Otherwise, this is what gyms are for.'
+      }
+    }
+  },
+  male: {
+    casual: {
+      frigid: { vibes:['cold weather ease','bundled up','winter casual'], items:[{ icon:'🧥', cat:'Outer layer', name:'Heavy puffer jacket or wool coat', detail:'Function first in extreme cold' },{ icon:'👚', cat:'Top', name:'Thermal undershirt + thick fleece or hoodie', detail:'Two top layers minimum' },{ icon:'👖', cat:'Bottoms', name:'Heavy jeans or thermal-lined pants', detail:'Regular jeans will feel very cold' },{ icon:'👢', cat:'Shoes', name:'Insulated boots', detail:'Keep feet warm and dry' },{ icon:'🧤', cat:'Accessories', name:'Beanie, scarf, and gloves', detail:'All three — no exceptions today' }], avoid:'Skip thin fabrics and avoid any gaps in coverage at the wrists, neck, or ankles.', tip:'Heavy base layer, thick fleece, insulated puffer on top, insulated boots. This temperature requires actual effort to stay warm.' },
+      cold: { vibes:['casual winter','effortless layers','easy cold'], items:[{ icon:'🧥', cat:'Outer layer', name:'Wool coat or puffer jacket', detail:'A good coat is doing most of the work today' },{ icon:'👚', cat:'Top', name:'Crewneck sweater or heavy hoodie', detail:'Over a base layer for extra warmth' },{ icon:'👖', cat:'Bottoms', name:'Straight or slim jeans, or chinos', detail:'Regular denim is fine at this temperature' },{ icon:'👟', cat:'Shoes', name:'Chelsea boots or clean sneakers with thick socks', detail:'Thick socks make a significant difference' },{ icon:'🧣', cat:'Accessories', name:'Scarf or beanie', detail:'Pick at least one' }], avoid:'Avoid thin t-shirts as a top layer. You will be cold.', tip:'A crewneck sweater over a base layer, jeans, a good coat, and Chelsea boots. Simple and right for a cold casual day.' },
+      chilly: { vibes:['easy layers','casual transition','relaxed cool'], items:[{ icon:'🧥', cat:'Layer', name:'Denim jacket, bomber, or light fleece', detail:'Something you can tie around your waist if you warm up' },{ icon:'👚', cat:'Top', name:'Long-sleeve tee or lightweight sweatshirt', detail:'One substantial top layer' },{ icon:'👖', cat:'Bottoms', name:'Jeans or chinos', detail:'Both work well at this temperature' },{ icon:'👟', cat:'Shoes', name:'Sneakers, loafers, or boots', detail:'All are appropriate' },{ icon:'⌚', cat:'Optional', name:'Watch or minimal accessories', detail:'Keep it simple' }], avoid:'A light jacket may be enough during the day but can feel cold in the evening — bring something you can layer.', tip:'Long-sleeve tee, jeans, a denim jacket or bomber. The standard relaxed-casual formula for this temperature.' },
+      mild: { vibes:['spring casual','easy and relaxed','no-overthink day'], items:[{ icon:'👚', cat:'Top', name:'Regular tee or henley', detail:'One solid layer is enough at this temperature' },{ icon:'👖', cat:'Bottoms', name:'Jeans, chinos, or casual trousers', detail:'All three work' },{ icon:'🧥', cat:'Optional', name:'Light cardigan or overshirt', detail:'Bring it but you may not need it' },{ icon:'👟', cat:'Shoes', name:'Sneakers, loafers, or casual boots', detail:'Hard to go wrong today' },{ icon:'🕶️', cat:'Optional', name:'Sunglasses if it is sunny', detail:'Mild and sunny is the best case scenario' }], avoid:'You probably do not need a heavy jacket today. Trust the temperature and dress lighter than you think.', tip:'A tee, jeans, and clean sneakers. Mild weather is when getting dressed is genuinely easy.' },
+      warm: { vibes:['warm casual','summer ease','relaxed warm'], items:[{ icon:'👚', cat:'Top', name:'Lightweight tee or linen shirt', detail:'Breathable fabrics in warm weather' },{ icon:'🩳', cat:'Bottoms', name:'Chino shorts or casual linen pants', detail:'Shorts are the obvious call today' },{ icon:'👟', cat:'Shoes', name:'Sneakers, loafers, or sandals', detail:'All work depending on where you are going' },{ icon:'🕶️', cat:'Accessories', name:'Sunglasses and SPF', detail:'Especially if you are outside for any length of time' },{ icon:'👖', cat:'Alt bottoms', name:'Light chinos if shorts are not appropriate', detail:'Linen or cotton blend' }], avoid:'Avoid dark colors and non-breathable fabrics if you will be in the sun. You will overheat.', tip:'A lightweight tee, shorts, and sneakers. Warm casual dressing does not need to be complicated.' },
+      hot: { vibes:['hot weather ease','summer minimal','stay cool'], items:[{ icon:'👚', cat:'Top', name:'Very lightweight or moisture-wicking tee', detail:'Linen or performance fabric' },{ icon:'🩳', cat:'Bottoms', name:'Shorts — linen or performance fabric', detail:'The lighter the better today' },{ icon:'🩴', cat:'Shoes', name:'Sandals or very breathable sneakers', detail:'Feet need to breathe today' },{ icon:'🎩', cat:'Must-have', name:'Cap and SPF', detail:'Especially if you are outside' },{ icon:'💧', cat:'Practical', name:'Stay hydrated', detail:'Hot weather with dark fabrics is a bad combination' }], avoid:'No dark colors, no synthetic fabrics, no closed-toe shoes if you can help it. Keep everything as light and loose as possible.', tip:'Linen or performance tee, shorts, sandals or breathable sneakers, a cap. Hot casual dressing is about staying comfortable.' },
+      scorching: { vibes:['extreme heat','survival mode','minimal'], items:[{ icon:'👚', cat:'Top', name:'Ultra-light moisture-wicking or linen tee', detail:'Lightest fabric you own' },{ icon:'🩳', cat:'Bottoms', name:'Very light shorts', detail:'Nothing restrictive' },{ icon:'🩴', cat:'Shoes', name:'Sandals or flip flops', detail:'Closed-toe anything will be very uncomfortable' },{ icon:'🎩', cat:'Must-have', name:'Cap and SPF 50', detail:'Non-negotiable' },{ icon:'💧', cat:'Critical', name:'Water everywhere', detail:'Dehydration sets in fast in extreme heat' }], avoid:'Every single heavy, dark, or synthetic item in your wardrobe. This is a day for minimum coverage in natural fabrics.', tip:'Linen tee, lightest shorts, sandals, cap, water. That is it. Scorching days call for the simplest possible approach.' }
+    },
+    professional: {
+      frigid: { vibes:['professional warmth','winter office','polished cold'], items:[{ icon:'🧥', cat:'Outer layer', name:'Wool overcoat in charcoal, navy, or camel', detail:'A quality overcoat is a wardrobe investment that pays off here' },{ icon:'👔', cat:'Top', name:'Dress shirt + tie, or turtleneck under a suit jacket', detail:'Turtleneck under a blazer is a strong cold-weather professional move' },{ icon:'👖', cat:'Bottoms', name:'Suit trousers or well-fitted dress pants', detail:'Pair with a blazer or full suit' },{ icon:'👞', cat:'Shoes', name:'Oxford or derby dress shoes with warm socks', detail:'Leather shoes in cold require good socks' },{ icon:'💼', cat:'Bag', name:'Leather briefcase or structured work bag', detail:'Completes the professional cold-weather look' }], avoid:'Avoid bulky casual layers under your blazer. A fine-knit turtleneck or thermal undershirt is the right call.', tip:'A wool overcoat over a suit or blazer with a turtleneck underneath. Cold professional dressing has a clear answer and this is it.' },
+      cold: { vibes:['sharp winter professional','office ready','cold polish'], items:[{ icon:'🧥', cat:'Outer layer', name:'Wool or cashmere overcoat', detail:'Over your suit or blazer combination' },{ icon:'👔', cat:'Top', name:'Dress shirt and tie, or a fine-knit sweater over a shirt', detail:'Both read professional in cold weather' },{ icon:'👖', cat:'Bottoms', name:'Suit trousers or tailored chinos', detail:'With a matching or coordinating jacket' },{ icon:'👞', cat:'Shoes', name:'Oxford, derby, or brogue shoes', detail:'Classic and always right' },{ icon:'💼', cat:'Bag', name:'Leather work bag or briefcase', detail:'Keep it intentional' }], avoid:'Avoid casual shoes or anything that reads too relaxed when the rest of the outfit is professional.', tip:'A suit or blazer-and-trousers combination under a wool overcoat is the professional cold-weather uniform. Simple, correct, complete.' },
+      chilly: { vibes:['smart casual professional','business ease','polished transition'], items:[{ icon:'🧥', cat:'Layer', name:'Tailored blazer or structured jacket', detail:'A blazer pulls almost any combination into professional territory' },{ icon:'👔', cat:'Top', name:'Oxford shirt, OCBD, or a fine-knit crewneck', detail:'Tucked or fitted for a professional look' },{ icon:'👖', cat:'Bottoms', name:'Chinos or tailored trousers', detail:'Well-fitted chinos in navy or tan are endlessly versatile' },{ icon:'👞', cat:'Shoes', name:'Loafers, derbies, or clean leather sneakers', detail:'Depends on the formality of your office' },{ icon:'💼', cat:'Bag', name:'Structured work bag', detail:'Always the right call' }], avoid:'Even in business casual environments, avoid wearing athletic fabrics or overly casual silhouettes. A well-fitted chino and blazer covers most situations.', tip:'Navy chinos, a white OCBD, a well-fitted blazer, and loafers. The business casual formula that always works.' },
+      mild: { vibes:['spring professional','easy office','confident and comfortable'], items:[{ icon:'👔', cat:'Top', name:'Dress shirt, OCBD, or lightweight knit', detail:'Tuck it in for a cleaner look' },{ icon:'👖', cat:'Bottoms', name:'Tailored chinos or dress trousers', detail:'Linen trousers are an excellent mild-weather professional option' },{ icon:'🧥', cat:'Layer', name:'Light blazer or unstructured sport coat', detail:'Easy to remove if you warm up' },{ icon:'👞', cat:'Shoes', name:'Loafers or clean derbies', detail:'Loafers are relaxed enough to be comfortable and polished enough to be professional' },{ icon:'💼', cat:'Bag', name:'Work bag or leather tote', detail:'Functional and appropriate' }], avoid:'Mild weather makes professional dressing easy. Do not overthink it — a good chino, a clean shirt, and a blazer is a complete outfit.', tip:'Linen trousers, a clean OCBD, an unstructured blazer, and loafers. The mild-weather professional formula.' },
+      warm: { vibes:['summer professional','warm office','linen and clean'], items:[{ icon:'👔', cat:'Top', name:'Lightweight dress shirt or linen shirt', detail:'Rolled sleeves in a warm professional setting reads polished and practical' },{ icon:'👖', cat:'Bottoms', name:'Linen or cotton-blend trousers', detail:'Linen is the warm-weather professional fabric' },{ icon:'👞', cat:'Shoes', name:'Loafers, derbies, or clean leather sneakers', detail:'No socks or short socks is acceptable in warm professional settings' },{ icon:'🕶️', cat:'Extras', name:'Minimal watch or leather band watch', detail:'The right finishing touch for a warm professional look' },{ icon:'💼', cat:'Bag', name:'Canvas or leather work tote', detail:'Canvas reads appropriate in summer professional settings' }], avoid:'Skip heavy suits on genuinely warm days if your office allows. Linen separates are the right call.', tip:'A linen shirt, linen trousers, and loafers. Warm professional dressing has one answer and this is it.' },
+      hot: { vibes:['hot day professional','summer office minimal','composed in the heat'], items:[{ icon:'👔', cat:'Top', name:'Lightweight short-sleeve or quarter-zip shirt', detail:'Short sleeves are professional in most warm offices' },{ icon:'👖', cat:'Bottoms', name:'Light linen or cotton-blend trousers', detail:'Nothing heavy today' },{ icon:'👞', cat:'Shoes', name:'Loafers without socks or breathable leather shoes', detail:'No socks is fine and appropriate in hot professional settings' },{ icon:'🕶️', cat:'Accessories', name:'Minimal watch only', detail:'Avoid anything that adds warmth' },{ icon:'💼', cat:'Bag', name:'Minimal work bag', detail:'Less to carry in the heat' }], avoid:'Skip jackets and blazers today unless you are in a heavily air-conditioned environment. Hot days require practical adjustments.', tip:'A light short-sleeve shirt, linen trousers, loafers without socks. Hot professional dressing is about staying composed while staying cool.' },
+      scorching: { vibes:['extreme heat professional','minimal office','survival polish'], items:[{ icon:'👔', cat:'Top', name:'Ultra-light linen or moisture-wicking dress shirt', detail:'The lightest possible fabric that still reads professional' },{ icon:'👖', cat:'Bottoms', name:'Linen trousers only', detail:'Everything else will be too warm' },{ icon:'👞', cat:'Shoes', name:'Loafers without socks', detail:'Your most breathable option' },{ icon:'🎩', cat:'Commute', name:'Hat for any outdoor exposure', detail:'Remove once inside' },{ icon:'💧', cat:'Practical', name:'Water and a plan to stay cool', detail:'Scorching days require intentional management' }], avoid:'If you can work from home today, strongly consider it. If you must go in, minimize every layer. No suit jacket, no tie.', tip:'Scorching days and professional dress codes are genuinely difficult. Linen shirt, linen trousers, loafers. That is the maximum you can reasonably manage.' }
+    },
+    'date-night': {
+      frigid: { vibes:['winter date night','cold weather sharp','elevated casual'], items:[{ icon:'🧥', cat:'Outer layer', name:'Wool overcoat or fitted puffer in a dark color', detail:'Something you would feel confident arriving in' },{ icon:'👔', cat:'Top', name:'Fitted crewneck sweater or turtleneck', detail:'Turtlenecks read very well for a cold date night' },{ icon:'👖', cat:'Bottoms', name:'Dark slim or straight jeans, or tailored trousers', detail:'Dark denim elevates more than light wash' },{ icon:'👞', cat:'Shoes', name:'Chelsea boots or clean leather boots', detail:'The right shoe makes a casual outfit feel intentional' },{ icon:'⌚', cat:'Accessories', name:'A clean watch', detail:'The right finishing detail' }], avoid:'A cold date night is worth making an effort. Skip overly casual layers and worn-out shoes.', tip:'Dark jeans, a fitted turtleneck, clean Chelsea boots, and a sharp overcoat. Minimal effort, strong result.' },
+      cold: { vibes:['casual sharp','cold date ease','winter evening'], items:[{ icon:'🧥', cat:'Outer layer', name:'Wool coat or leather jacket', detail:'Leather jacket elevates even a simple outfit' },{ icon:'👔', cat:'Top', name:'Fitted sweater or a button-down with a cardigan', detail:'Something slightly elevated from your daily casual' },{ icon:'👖', cat:'Bottoms', name:'Dark jeans or chinos', detail:'Dark denim reads more intentional' },{ icon:'👞', cat:'Shoes', name:'Chelsea boots or clean white sneakers', detail:'Both work — boots are more evening-appropriate' },{ icon:'⌚', cat:'Detail', name:'Clean watch or simple accessory', detail:'Finishing touches matter' }], avoid:'Cold date nights deserve an effort. Avoid worn sneakers or visibly casual pieces.', tip:'Dark jeans, a fitted sweater, clean Chelsea boots, and a leather jacket or wool coat. This always works.' },
+      chilly: { vibes:['elevated casual','effortless date','sharp and relaxed'], items:[{ icon:'🧥', cat:'Layer', name:'Leather jacket, bomber, or tailored blazer', detail:'Any of these elevates an outfit for an evening out' },{ icon:'👔', cat:'Top', name:'Button-down shirt or fitted crewneck', detail:'Slightly more elevated than your usual tee' },{ icon:'👖', cat:'Bottoms', name:'Dark jeans or chinos', detail:'Slim or straight, both work' },{ icon:'👞', cat:'Shoes', name:'Clean sneakers or Chelsea boots', detail:'Depends on the venue but both can work' },{ icon:'⌚', cat:'Detail', name:'Watch', detail:'Small but effective' }], avoid:'Do not leave the house in the same thing you would wear to run errands. Small upgrades — darker jeans, cleaner shoes — make a real difference.', tip:'Dark jeans, a button-down, a leather jacket, and clean shoes. Chilly date night dressing does not need to be complicated.' },
+      mild: { vibes:['spring date night','easy and sharp','relaxed elevated'], items:[{ icon:'👔', cat:'Top', name:'Linen or cotton button-down, or a fitted polo', detail:'Tucked or half-tucked for a more intentional look' },{ icon:'👖', cat:'Bottoms', name:'Chinos or dark jeans', detail:'Chinos in tan or navy read nicely for a spring evening' },{ icon:'👞', cat:'Shoes', name:'Loafers or clean leather sneakers', detail:'Loafers are the right call for most mild date nights' },{ icon:'🧥', cat:'Optional', name:'Light linen blazer or overshirt', detail:'Nice to have for the evening' },{ icon:'⌚', cat:'Detail', name:'Watch and minimal accessories', detail:'Keep it clean' }], avoid:'Mild date nights are easy to dress for. A clean, fitted, intentional outfit is all that is needed.', tip:'Tan chinos, a linen button-down, loafers, and a light blazer if the occasion calls for it. Mild spring date night made easy.' },
+      warm: { vibes:['warm evening sharp','summer date','relaxed and intentional'], items:[{ icon:'👔', cat:'Top', name:'Open-collar linen shirt or fitted short-sleeve button-down', detail:'Relaxed but clearly intentional' },{ icon:'👖', cat:'Bottoms', name:'Chinos or tailored shorts if appropriate', detail:'Smart shorts in a casual setting, chinos everywhere else' },{ icon:'👞', cat:'Shoes', name:'Loafers, boat shoes, or clean leather sandals', detail:'Warm evening footwear can be relaxed' },{ icon:'🕶️', cat:'If daytime', name:'Sunglasses', detail:'Good sunglasses are a simple style move' },{ icon:'⌚', cat:'Detail', name:'Watch', detail:'Always the right finishing touch' }], avoid:'Warm date nights are casual by nature. The goal is intentional and clean, not overdressed.', tip:'A linen shirt, chinos, and loafers. Warm evening dressing for men is easy when you keep it clean and well-fitted.' },
+      hot: { vibes:['hot evening sharp','summer minimal','easy glam'], items:[{ icon:'👔', cat:'Top', name:'Very lightweight linen or moisture-wicking shirt', detail:'Open collar, relaxed fit' },{ icon:'👖', cat:'Bottoms', name:'Linen trousers or smart shorts', detail:'Linen is your best friend in hot evening dressing' },{ icon:'👞', cat:'Shoes', name:'Loafers without socks or clean sandals', detail:'Keep feet cool and comfortable' },{ icon:'🕶️', cat:'Evening accents', name:'Watch and nothing else', detail:'Minimal accessories in heat — less is more' },{ icon:'💧', cat:'Practical', name:'Stay hydrated before you go', detail:'Starting hydrated makes a real difference in the heat' }], avoid:'Avoid overdressing on a hot date night. Light linen and clean footwear is the entire answer.', tip:'A linen shirt, linen trousers, loafers without socks. Hot date night for men solved in three pieces.' },
+      scorching: { vibes:['minimal evening','extreme heat date','cool and composed'], items:[{ icon:'👔', cat:'Top', name:'Ultra-light linen short-sleeve shirt', detail:'The lightest possible fabric that still looks intentional' },{ icon:'👖', cat:'Bottoms', name:'Light linen trousers or tailored shorts', detail:'Nothing synthetic, nothing tight' },{ icon:'👞', cat:'Shoes', name:'Loafers or leather sandals', detail:'No socks and open footwear is the right call' },{ icon:'⌚', cat:'Detail', name:'Minimal watch only', detail:'One clean detail' },{ icon:'💧', cat:'Practical', name:'Hydrate properly beforehand', detail:'Hot date nights require some actual preparation' }], avoid:'Skip every heavy piece tonight. A scorching date night calls for linen, open footwear, no socks, minimal layers.', tip:'Linen shirt, linen trousers, leather sandals or sockless loafers. Scorching date night dressing is about staying composed despite the conditions.' }
+    },
+    vacation: {
+      frigid: { vibes:['cold getaway','winter travel','bundled explorer'], items:[{ icon:'🧥', cat:'Outer', name:'Insulated puffer or ski-style jacket', detail:'Function is everything in extreme cold on vacation' },{ icon:'👚', cat:'Layers', name:'Thermal base layer plus fleece', detail:'Two top layers under the jacket' },{ icon:'👖', cat:'Bottoms', name:'Insulated or lined pants', detail:'Regular jeans will feel cold quickly' },{ icon:'👢', cat:'Shoes', name:'Insulated waterproof boots', detail:'Non-negotiable for cold vacation activities' },{ icon:'🧤', cat:'Accessories', name:'Hat, gloves, and scarf or neck gaiter', detail:'All three are essential' }], avoid:'Do not sacrifice warmth for aesthetics on a cold-weather vacation. Frostbite is the enemy of a good trip.', tip:'Insulated base layer, fleece mid-layer, waterproof outer, insulated boots. Cold vacation dressing is a system, not an outfit.' },
+      cold: { vibes:['city winter break','stylish traveller','cold exploring'], items:[{ icon:'🧥', cat:'Outer', name:'Wool coat or quality puffer', detail:'Something that photographs well and keeps you warm' },{ icon:'👚', cat:'Top', name:'Chunky knit or warm hoodie', detail:'Over a base layer' },{ icon:'👖', cat:'Bottoms', name:'Jeans or warm chinos', detail:'Dark wash jeans look good in most travel settings' },{ icon:'👢', cat:'Shoes', name:'Comfortable boots with warm socks', detail:'You will walk a lot — comfort is non-negotiable' },{ icon:'🎒', cat:'Bag', name:'Backpack or crossbody', detail:'Hands-free for exploring' }], avoid:'Avoid uncomfortable footwear. Cold city vacations involve constant walking and sore feet ruin everything.', tip:'A quality coat, warm knit, dark jeans, and comfortable boots. Cold vacation dressing that works from morning sightseeing to evening dinner.' },
+      chilly: { vibes:['easy travel','casual explorer','relaxed getaway'], items:[{ icon:'🧥', cat:'Layer', name:'Light jacket or hoodie', detail:'Packable is ideal for travel' },{ icon:'👚', cat:'Top', name:'Comfortable tee or long sleeve', detail:'Something you can move and explore in' },{ icon:'👖', cat:'Bottoms', name:'Jeans or casual trousers', detail:'Comfortable for a full day out' },{ icon:'👟', cat:'Shoes', name:'Comfortable walking shoes or sneakers', detail:'Comfortable feet on vacation is not negotiable' },{ icon:'🎒', cat:'Bag', name:'Backpack or crossbody', detail:'The vacation bag that always makes sense' }], avoid:'No uncomfortable shoes. No exceptions on vacation.', tip:'Comfortable jeans, a tee, a light jacket, and good walking shoes. Chilly vacation dressing is simple and the formula never fails.' },
+      mild: { vibes:['perfect travel day','spring exploring','relaxed and ready'], items:[{ icon:'👚', cat:'Top', name:'Tee or linen shirt', detail:'Packable and versatile — the backbone of travel dressing' },{ icon:'👖', cat:'Bottoms', name:'Jeans, chinos, or casual linen pants', detail:'Something that works from exploring to a casual dinner' },{ icon:'🧥', cat:'Layer', name:'Light cardigan, overshirt, or packable jacket', detail:'For evenings or air-conditioned spaces' },{ icon:'👟', cat:'Shoes', name:'Comfortable sneakers or walking shoes', detail:'Mild + comfortable shoes = a perfect travel day' },{ icon:'🎒', cat:'Bag', name:'Daypack or crossbody', detail:'For everything you need on a day out' }], avoid:'Mild travel weather is ideal. The only mistake is uncomfortable shoes. Pack versatile pieces you can mix and match.', tip:'A tee, easy pants, a light layer, and comfortable shoes. Mild travel weather is genuinely the easiest dressing situation there is.' },
+      warm: { vibes:['warm getaway','summer exploring','beach-adjacent'], items:[{ icon:'👚', cat:'Top', name:'Linen shirt or lightweight tee', detail:'Breathable and vacation-appropriate' },{ icon:'🩳', cat:'Bottoms', name:'Chino shorts or swim trunks that double as shorts', detail:'Versatile vacation basics' },{ icon:'🩴', cat:'Shoes', name:'Sandals or comfortable sneakers', detail:'Both work depending on the day' },{ icon:'🕶️', cat:'Must-have', name:'Sunglasses, hat, SPF', detail:'Every day on a warm vacation' },{ icon:'🎒', cat:'Bag', name:'Canvas tote or small daypack', detail:'Fits the day and looks vacation-appropriate' }], avoid:'Avoid over-packing. Warm vacation dressing requires less than you think. Neutral colors that coordinate make everything easier.', tip:'A linen shirt, easy shorts, sandals, a hat, and sunglasses. Warm vacation dressing is actually the simplest kind.' },
+      hot: { vibes:['tropical ease','resort mode','beach vacation'], items:[{ icon:'🩱', cat:'Base', name:'Swim trunks as your starting point', detail:'You may go from beach to lunch in one outfit' },{ icon:'👚', cat:'Top', name:'Linen shirt or lightweight tee over swim trunks', detail:'Easy to take on and off' },{ icon:'🩴', cat:'Shoes', name:'Sandals or flip flops', detail:'Hot vacation is flip-flop territory' },{ icon:'🎩', cat:'Must-have', name:'Hat, sunglasses, SPF', detail:'All three every day without exception' },{ icon:'🎒', cat:'Bag', name:'Canvas beach bag', detail:'Holds everything and looks right' }], avoid:'Trying too hard on a hot vacation reads wrong. One good hat and a linen shirt over swim trunks does everything.', tip:'Swim trunks, a linen shirt, sandals, hat, sunglasses. Hot vacation dressing. That is the whole formula.' },
+      scorching: { vibes:['extreme ease','desert or tropical','minimal resort'], items:[{ icon:'👚', cat:'Top', name:'Lightest linen shirt you own', detail:'Minimal coverage, maximum airflow' },{ icon:'🩳', cat:'Bottoms', name:'Very light shorts', detail:'Nothing restrictive or heavy' },{ icon:'🩴', cat:'Shoes', name:'Sandals only', detail:'The only reasonable footwear today' },{ icon:'🎩', cat:'Essential', name:'Hat and SPF 50+', detail:'Not optional' },{ icon:'💧', cat:'Critical', name:'Water and electrolytes', detail:'Hydration management is essential on a scorching vacation day' }], avoid:'Everything that traps heat. Natural fabrics only. Stay in the shade during the peak hours.', tip:'Lightest possible linen shirt, shorts, sandals, hat, sunglasses, water. Scorching vacation day solved.' }
+    },
+    athletic: {
+      frigid: { vibes:['cold weather athlete','winter warrior','layered and ready'], items:[{ icon:'🧥', cat:'Shell', name:'Wind-resistant insulated running jacket', detail:'The outermost barrier against extreme cold' },{ icon:'👚', cat:'Mid layer', name:'Thermal fleece half-zip', detail:'Traps heat while moving' },{ icon:'🩳', cat:'Base', name:'Thermal running tights', detail:'Full-length is the only option today' },{ icon:'👟', cat:'Shoes', name:'Running shoes with grip and minimal mesh', detail:'Avoid highly ventilated mesh in extreme cold' },{ icon:'🧤', cat:'Accessories', name:'Running gloves and balaclava', detail:'Protect face, ears, and hands seriously' }], avoid:'Exposed skin in extreme cold during exercise can cause rapid heat loss. Cover everything.', tip:'Thermal base, fleece mid, insulated shell, thermal tights, running gloves, balaclava. Cold outdoor athletics is about layering systematically.' },
+      cold: { vibes:['cold run ready','outdoor athlete','winter active'], items:[{ icon:'🧥', cat:'Jacket', name:'Running jacket or athletic wind-breaker', detail:'Wind-resistant and moisture-wicking outer' },{ icon:'👚', cat:'Top', name:'Long-sleeve thermal base layer', detail:'Stays warm without overheating once moving' },{ icon:'🩳', cat:'Bottoms', name:'Running tights or fleece leggings', detail:'Full-length for cold running' },{ icon:'👟', cat:'Shoes', name:'Running shoes for your surface', detail:'Road or trail depending on your route' },{ icon:'🧤', cat:'Accessories', name:'Light gloves and ear protection', detail:'You may remove gloves once warmed up' }], avoid:'The classic mistake: overdressing for a cold run and overheating within ten minutes. You should feel slightly cold at the start.', tip:'You should feel slightly underdressed at the start of a cold run. Your body temperature will rise significantly within minutes of moving.' },
+      chilly: { vibes:['crisp run','outdoor active','athletic ease'], items:[{ icon:'👚', cat:'Top', name:'Long-sleeve moisture-wicking top or light running jacket', detail:'One layer is usually enough once you warm up' },{ icon:'🩳', cat:'Bottoms', name:'Running tights or 7/8 leggings', detail:'Full or 7/8 length both work at this temp' },{ icon:'👟', cat:'Shoes', name:'Running shoes or cross-trainers', detail:'Match to your activity' },{ icon:'🧤', cat:'Optional', name:'Light gloves', detail:'You will likely remove them once moving' },{ icon:'🎽', cat:'Alt', name:'Heavy sweatshirt and joggers', detail:'For a gym day or more casual activity' }], avoid:'Avoid cotton base layers — they hold sweat and will make you cold when you stop.', tip:'A breathable long-sleeve and running tights is all you need for chilly outdoor exercise. Clean, functional, right.' },
+      mild: { vibes:['perfect workout day','spring active','easy athletic'], items:[{ icon:'🎽', cat:'Top', name:'Athletic tee or performance tank', detail:'Mild weather is ideal for lightweight athletic tops' },{ icon:'🩳', cat:'Bottoms', name:'Running shorts, biker shorts, or athletic tights', detail:'All work at this temperature' },{ icon:'👟', cat:'Shoes', name:'Running shoes or cross-trainers', detail:'Match to your activity' },{ icon:'🧴', cat:'Extras', name:'SPF if outside', detail:'Mild does not mean no UV' },{ icon:'💧', cat:'Hydration', name:'Water bottle', detail:'Always, especially outdoors' }], avoid:'No overthinking needed for mild athletic dressing. A performance tee and shorts is exactly the right call.', tip:'Mild weather is the best weather for working out. A tee, shorts, good shoes. Ideal conditions — make the most of them.' },
+      warm: { vibes:['warm run','summer athletic','light and moving'], items:[{ icon:'🎽', cat:'Top', name:'Moisture-wicking tank or very lightweight tee', detail:'Minimize fabric in warm conditions' },{ icon:'🩳', cat:'Bottoms', name:'Running shorts', detail:'Avoid tights or long pants today' },{ icon:'👟', cat:'Shoes', name:'Breathable running shoes', detail:'Ventilated mesh uppers are worth it' },{ icon:'🧴', cat:'Must-have', name:'SPF and a cap or visor', detail:'Sun protection during outdoor warm exercise' },{ icon:'💧', cat:'Essential', name:'Water and a hydration plan', detail:'Bring more than you think you need' }], avoid:'Avoid cotton athletic wear — it absorbs sweat and adds weight and discomfort. Performance or linen fabrics only.', tip:'Moisture-wicking tank, shorts, breathable shoes, SPF, and a cap. Warm athletic dressing is about keeping cool and protected.' },
+      hot: { vibes:['heat athlete','minimal active','summer intensity'], items:[{ icon:'🎽', cat:'Top', name:'Ultra-lightweight moisture-wicking singlet', detail:'Minimum fabric' },{ icon:'🩳', cat:'Bottoms', name:'Short running shorts', detail:'Nothing long today' },{ icon:'👟', cat:'Shoes', name:'Breathable running shoes', detail:'Mesh uppers are essential in hot running' },{ icon:'🧢', cat:'Must-have', name:'Cap and SPF 50', detail:'Critical for hot outdoor exercise' },{ icon:'💧', cat:'Critical', name:'Electrolyte drink and water', detail:'Plain water alone is insufficient in hot exercise conditions' }], avoid:'Consider whether outdoor exercise is the right call in real heat. Early morning or post-sunset training is significantly safer.', tip:'Hot athletic conditions are a health consideration, not just a comfort one. Minimum clothing, maximum hydration, consider your timing carefully.' },
+      scorching: { vibes:['extreme heat athlete','indoor or early morning','minimal active'], items:[{ icon:'🎽', cat:'Top', name:'Singlet or no shirt if appropriate', detail:'Minimum coverage' },{ icon:'🩳', cat:'Bottoms', name:'Very light running shorts', detail:'As little fabric as sensibly possible' },{ icon:'👟', cat:'Shoes', name:'Most breathable shoes you own', detail:'Mesh upper running shoes' },{ icon:'💧', cat:'Critical', name:'Electrolytes and significant water', detail:'Scorching exercise dehydration is serious' },{ icon:'🌡️', cat:'Safety', name:'Strongly consider indoors or rescheduling', detail:'Scorching temperatures and intense exercise are genuinely dangerous' }], avoid:'Outdoor intense exercise in scorching temperatures is a genuine health risk. This is not an overstatement. Adjust your plans.', tip:'Scorching temperatures make outdoor athletic activity dangerous. If you must exercise: minimum clothing, maximum hydration, short duration, shade only, and have a cooling plan ready.' }
+    }
   }
-  return 'mild';
+};
+
+// ─── WEATHER HELPERS ──────────────────────────────────────
+const CONDITION_EMOJIS = { 'clear':' ☀️','sunny':'☀️','mostly clear':'🌤️','partly cloudy':'⛅','mostly cloudy':'🌥️','overcast':'☁️','fog':'🌫️','drizzle':'🌦️','rain':'🌧️','snow':'❄️','thunder':'⛈️' };
+
+function getEmoji(condition) {
+  const c = (condition||'').toLowerCase();
+  for (const [k,v] of Object.entries(CONDITION_EMOJIS)) { if (c.includes(k)) return v; }
+  return '🌡️';
 }
 
 function decodeWMO(code) {
-  if (code === 0) return 'Clear';
-  if (code === 1) return 'Mostly Clear';
-  if (code === 2) return 'Partly Cloudy';
-  if (code === 3) return 'Overcast';
-  if ([45,48].includes(code)) return 'Fog';
-  if ([51,53,55].includes(code)) return 'Drizzle';
-  if ([61,63,65].includes(code)) return 'Rain';
-  if ([71,73,75].includes(code)) return 'Snow';
-  if ([77].includes(code)) return 'Snow Grains';
-  if ([80,81,82].includes(code)) return 'Rain Showers';
-  if ([85,86].includes(code)) return 'Snow Showers';
-  if ([95,96,99].includes(code)) return 'Thunderstorm';
+  if (code===0) return 'Clear';
+  if (code<=2) return 'Partly Cloudy';
+  if (code===3) return 'Overcast';
+  if (code<=48) return 'Fog';
+  if (code<=55) return 'Drizzle';
+  if (code<=65) return 'Rain';
+  if (code<=77) return 'Snow';
+  if (code<=82) return 'Rain Showers';
+  if (code<=86) return 'Snow Showers';
+  if (code<=99) return 'Thunderstorm';
   return 'Variable';
 }
 
-function isRainy(condition) {
-  const c = (condition || '').toLowerCase();
-  return c.includes('rain') || c.includes('drizzle') || c.includes('shower') || c.includes('thunder');
+function getTempZone(f) {
+  if (f<=20) return 'frigid';
+  if (f<=40) return 'cold';
+  if (f<=55) return 'chilly';
+  if (f<=68) return 'mild';
+  if (f<=80) return 'warm';
+  if (f<=95) return 'hot';
+  return 'scorching';
 }
 
-function isSnowy(condition) {
-  const c = (condition || '').toLowerCase();
-  return c.includes('snow') || c.includes('sleet') || c.includes('ice');
+function uvLabel(uv) {
+  if (uv==null) return null;
+  if (uv<3) return { text:`UV ${uv} — Low`, cls:'uv-low' };
+  if (uv<6) return { text:`UV ${uv} — Moderate`, cls:'uv-moderate' };
+  if (uv<8) return { text:`UV ${uv} — High`, cls:'uv-high' };
+  return { text:`UV ${uv} — Very High`, cls:'uv-very-high' };
 }
 
-function celsiusToF(c) { return Math.round(c * 9/5 + 32); }
-
-let forecastData = null;
-let selectedDayIndex = 0;
-
-const zipInput = document.getElementById('zipInput');
-const lookupBtn = document.getElementById('lookupBtn');
-const dateStrip = document.getElementById('dateStrip');
+// ─── DOM REFS ─────────────────────────────────────────────
+const zipInput   = document.getElementById('zipInput');
+const goBtn      = document.getElementById('goBtn');
+const homeBtn    = document.getElementById('homeBtn');
+const setHomeBtn = document.getElementById('setHomeBtn');
+const dateStrip  = document.getElementById('dateStrip');
 const outfitCard = document.getElementById('outfitCard');
 const loadingState = document.getElementById('loadingState');
-const emptyState = document.getElementById('emptyState');
-const errorMsg = document.getElementById('errorMsg');
+const emptyState   = document.getElementById('emptyState');
+const errorMsg     = document.getElementById('errorMsg');
 const locationDisplay = document.getElementById('locationDisplay');
 
-function showError(msg) {
-  errorMsg.textContent = msg;
-  errorMsg.classList.add('visible');
-}
+// ─── TOGGLE SETUP ────────────────────────────────────────
+document.querySelectorAll('[data-gender]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-gender]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentGender = btn.dataset.gender;
+    if (forecastData) renderOutfitCard(forecastData[selectedDayIndex]);
+  });
+});
 
-function hideError() {
-  errorMsg.classList.remove('visible');
-}
+document.querySelectorAll('[data-style]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-style]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentStyle = btn.dataset.style;
+    if (forecastData) renderOutfitCard(forecastData[selectedDayIndex]);
+  });
+});
 
-function showLoading(yes) {
-  loadingState.style.display = yes ? 'block' : 'none';
-  emptyState.style.display = 'none';
-}
+// ─── HOME ZIP ────────────────────────────────────────────
+updateHomeBtn();
 
+setHomeBtn.addEventListener('click', () => {
+  const zip = zipInput.value.trim();
+  if (/^\d{5}$/.test(zip)) {
+    saveHomeZip(zip);
+    setHomeBtn.textContent = 'Saved!';
+    setTimeout(() => { setHomeBtn.textContent = 'Set current ZIP as home'; }, 2000);
+  } else {
+    showError('Enter a valid ZIP code first.');
+  }
+});
+
+homeBtn.addEventListener('click', () => {
+  const zip = getHomeZip();
+  if (zip) { zipInput.value = zip; fetchForecast(zip); }
+});
+
+// ─── BUILD DATE STRIP ────────────────────────────────────
 function buildDateStrip(days) {
   dateStrip.innerHTML = '';
   days.forEach((d, i) => {
     const dt = new Date(d.date + 'T12:00:00');
-    const dayName = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : dt.toLocaleDateString('en-US', { weekday: 'short' });
-    const dateStr = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const dayName = i===0?'Today':i===1?'Tomorrow':dt.toLocaleDateString('en-US',{weekday:'short'});
+    const dateStr = dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
     const chip = document.createElement('button');
-    chip.className = 'date-chip' + (i === selectedDayIndex ? ' active' : '');
+    chip.className = 'date-chip' + (i===selectedDayIndex?' active':'');
     chip.innerHTML = `<span class="chip-day">${dayName}</span><span class="chip-date">${dateStr}</span>`;
     chip.addEventListener('click', () => {
       selectedDayIndex = i;
-      document.querySelectorAll('.date-chip').forEach((c, j) => c.classList.toggle('active', j === i));
+      document.querySelectorAll('.date-chip').forEach((c,j) => c.classList.toggle('active', j===i));
       renderOutfitCard(forecastData[i]);
     });
     dateStrip.appendChild(chip);
   });
 }
 
+// ─── RENDER CARD ─────────────────────────────────────────
 function renderOutfitCard(day) {
-  const tempF = day.tempF;
-  const hi = day.hiF;
-  const lo = day.loF;
-  const condition = day.condition;
-  const humidity = day.humidity;
-  const wind = day.wind;
+  const zone = getTempZone(day.tempF);
+  const genderData = OUTFITS[currentGender] || OUTFITS.female;
+  const styleData  = genderData[currentStyle] || genderData.casual;
+  const outfit     = styleData[zone] || styleData.mild;
 
-  const category = getTempCategory(tempF);
-  const outfit = OUTFITS[category];
-  let items = [...outfit.items];
-  let vibes = [...outfit.vibes];
-  let tip = outfit.tip;
+  const emoji = getEmoji(day.condition);
+  const uv    = uvLabel(day.uv);
 
-  const rainy = isRainy(condition);
-  const snowy = isSnowy(condition);
-
-  if (snowy) {
-    items = [SNOW_OVERRIDE.extra, ...items.slice(0, -1)];
-    vibes = SNOW_OVERRIDE.vibes;
-    tip += SNOW_OVERRIDE.tip_suffix;
-  } else if (rainy) {
-    items = [RAIN_OVERRIDE.extra, RAIN_OVERRIDE.footwear, ...items.slice(0, 3)];
-    vibes = RAIN_OVERRIDE.vibes;
-    tip += RAIN_OVERRIDE.tip_suffix;
-  }
-
-  const emoji = getEmoji(condition);
+  let metaHTML = `<span class="meta-pill">💧 ${day.humidity}%</span><span class="meta-pill">🌬 ${day.wind} mph</span>`;
+  if (uv) metaHTML += `<span class="meta-pill uv-pill ${uv.cls}">${uv.text}</span>`;
+  if (day.precip > 20) metaHTML += `<span class="meta-pill">🌂 ${day.precip}% rain</span>`;
 
   outfitCard.innerHTML = `
     <div class="card-top">
       <div class="weather-row">
         <div class="temp-block">
-          <div class="temp-main">${tempF}<span class="temp-unit">°F</span></div>
-          <div class="temp-range">↑${hi}° ↓${lo}°</div>
+          <div class="temp-main">${day.tempF}<span class="temp-unit">°F</span></div>
+          <div class="temp-feels">Feels like ${day.feelsLike}°</div>
+          <div class="temp-range">↑${day.hiF}° ↓${day.loF}°</div>
         </div>
         <div class="weather-details">
-          <div class="weather-condition">${condition}</div>
-          <div class="weather-meta">
-            <span class="meta-pill">💧 ${humidity}% humidity</span>
-            <span class="meta-pill">🌬 ${wind} mph wind</span>
-          </div>
+          <div class="weather-condition">${day.condition}</div>
+          <div class="weather-meta">${metaHTML}</div>
         </div>
-        <div class="weather-emoji" aria-hidden="true">${emoji}</div>
+        <div class="weather-emoji">${emoji}</div>
       </div>
     </div>
     <div class="card-body">
       <div class="section-label">Today's vibe</div>
-      <div class="vibe-strip">
-        ${vibes.map(v => `<span class="vibe-tag">${v}</span>`).join('')}
-      </div>
+      <div class="vibe-strip">${outfit.vibes.map(v=>`<span class="vibe-tag">${v}</span>`).join('')}</div>
       <div class="section-label">What to wear</div>
-      <div class="outfit-grid">
-        ${items.map(item => `
-          <div class="outfit-item">
-            <span class="item-icon" aria-hidden="true">${item.icon}</span>
-            <div class="item-category">${item.cat}</div>
-            <div class="item-name">${item.name}</div>
-            <div class="item-detail">${item.detail}</div>
-          </div>
-        `).join('')}
+      <div class="outfit-grid">${outfit.items.map(item=>`
+        <div class="outfit-item">
+          <span class="item-icon">${item.icon}</span>
+          <div class="item-category">${item.cat}</div>
+          <div class="item-name">${item.name}</div>
+          <div class="item-detail">${item.detail}</div>
+        </div>`).join('')}</div>
+      <div class="avoid-box">
+        <div class="avoid-label">⚠ What to avoid today</div>
+        <div class="avoid-text">${outfit.avoid}</div>
       </div>
       <div class="tip-box">
-        <div class="tip-label">✦ style tip</div>
-        <div class="tip-text">${tip}</div>
+        <div class="tip-label">✦ Style tip</div>
+        <div class="tip-text">${outfit.tip}</div>
       </div>
-    </div>
-  `;
+    </div>`;
 
   outfitCard.classList.add('visible');
+  outfitCard.style.animation = 'none';
+  void outfitCard.offsetWidth;
+  outfitCard.style.animation = '';
 }
+
+// ─── FETCH ───────────────────────────────────────────────
+function showError(msg) { errorMsg.textContent=msg; errorMsg.classList.add('visible'); }
+function hideError() { errorMsg.classList.remove('visible'); }
 
 async function fetchForecast(zip) {
   hideError();
-  showLoading(true);
+  loadingState.style.display = 'block';
+  emptyState.style.display = 'none';
   outfitCard.classList.remove('visible');
 
   try {
@@ -789,42 +1267,40 @@ async function fetchForecast(zip) {
     const place = geoData.places[0];
     const lat = parseFloat(place.latitude);
     const lon = parseFloat(place.longitude);
-    const cityName = `${place['place name']}, ${place['state abbreviation']}`;
+    locationDisplay.textContent = `📍 ${place['place name']}, ${place['state abbreviation']}`;
 
-    locationDisplay.textContent = `📍 ${cityName}`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_probability_max,wind_speed_10m_max,uv_index_max,relative_humidity_2m_mean&timezone=auto&temperature_unit=fahrenheit&wind_speed_unit=mph&forecast_days=15`;
+    const wRes = await fetch(url);
+    if (!wRes.ok) throw new Error('Could not load weather data. Please try again.');
+    const wData = await wRes.json();
+    if (wData.error) throw new Error(wData.reason || 'Weather data error.');
 
-    const weatherRes = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,relative_humidity_2m_mean&timezone=auto&temperature_unit=fahrenheit&wind_speed_unit=mph&forecast_days=15`
-    );
-    if (!weatherRes.ok) throw new Error('Could not load weather data. Please try again.');
-    const weatherData = await weatherRes.json();
-    if (weatherData.error) throw new Error(weatherData.reason || 'Could not load weather data. Please try again.');
-
-    const days = weatherData.daily;
-    forecastData = days.time.slice(0, 15).map((date, i) => {
-      const hi = Math.round(days.temperature_2m_max[i]);
-      const lo = Math.round(days.temperature_2m_min[i]);
-      const avg = Math.round((hi + lo) / 2);
-      const condition = decodeWMO(days.weather_code[i]);
+    const d = wData.daily;
+    forecastData = d.time.slice(0,15).map((date,i) => {
+      const hi = Math.round(d.temperature_2m_max[i]);
+      const lo = Math.round(d.temperature_2m_min[i]);
+      const feelsHi = Math.round(d.apparent_temperature_max[i]);
+      const feelsLo = Math.round(d.apparent_temperature_min[i]);
       return {
         date,
-        tempF: avg,
-        hiF: hi,
-        loF: lo,
-        condition,
-        humidity: Math.round(days.relative_humidity_2m_mean[i]) || '--',
-        wind: Math.round(days.wind_speed_10m_max[i]) || '--',
-        precip: days.precipitation_probability_max[i] || 0
+        tempF: Math.round((hi+lo)/2),
+        hiF: hi, loF: lo,
+        feelsLike: Math.round((feelsHi+feelsLo)/2),
+        condition: decodeWMO(d.weather_code[i]),
+        humidity: Math.round(d.relative_humidity_2m_mean[i]) || '--',
+        wind: Math.round(d.wind_speed_10m_max[i]) || '--',
+        precip: d.precipitation_probability_max[i] || 0,
+        uv: d.uv_index_max ? Math.round(d.uv_index_max[i]) : null
       };
     });
 
     selectedDayIndex = 0;
     buildDateStrip(forecastData);
-    showLoading(false);
+    loadingState.style.display = 'none';
     renderOutfitCard(forecastData[0]);
 
-  } catch (err) {
-    showLoading(false);
+  } catch(err) {
+    loadingState.style.display = 'none';
     emptyState.style.display = 'block';
     outfitCard.classList.remove('visible');
     locationDisplay.textContent = '';
@@ -832,18 +1308,21 @@ async function fetchForecast(zip) {
   }
 }
 
-lookupBtn.addEventListener('click', () => {
+goBtn.addEventListener('click', () => {
   const zip = zipInput.value.trim();
-  if (!/^\d{5}$/.test(zip)) {
-    showError('Please enter a valid 5-digit US ZIP code.');
-    return;
-  }
+  if (!/^\d{5}$/.test(zip)) { showError('Please enter a valid 5-digit US ZIP code.'); return; }
   fetchForecast(zip);
 });
+zipInput.addEventListener('keydown', e => { if (e.key==='Enter') goBtn.click(); });
 
-zipInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') lookupBtn.click();
-});
+// ─── OFFLINE BANNER ──────────────────────────────────────
+window.addEventListener('online',  () => document.getElementById('offlineBanner').classList.remove('visible'));
+window.addEventListener('offline', () => document.getElementById('offlineBanner').classList.add('visible'));
+
+// ─── SERVICE WORKER ──────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(console.error);
+}
 </script>
 </body>
 </html>
